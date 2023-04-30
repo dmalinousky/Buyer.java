@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: monospace;
+      margin: 2% 5%;
+    }
+    h1 {
+      text-align: center;
+      font-size: 40px;
+      font-weight: bold;
+    }
+    form {
+      font-family: monospace;
+    }
+    input::placeholder {
+      font-family: monospace;
+    }
+    input {
+      min-width: 25vw;
+      height: 3.5vh;
+      font-family: monospace;
+      font-size: 150%;
+    }
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 5vw;
+      height: 4vh;
+      font-family: monospace;
+      font-weight: bold;
+    }
+    a {
+      text-decoration: none;
+      font-size: inherit;
+    }
+    a:link {
+      color: red;
+    }
+    a:visited {
+      color: red;
+    }
+    a:hover {
+      color: white;
+    }
+    .main_block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .field_container {
+      display: block;
+    }
+    .field {
+      display: flex;
+      align-items: center;
+      min-width: 40vw;
+      margin: 3%;
+    }
+    .checkbox {
+      height: fit-content; 
+      min-width: 1vw;
+    }
+  </style>
+</head>
+<body>
+<div class="main_block">
+  <div><h1>Order creation</h1></div>
+  <form method="get">
+    <div class="field_container">
+      <div class="field"><input type="text" name="warehouseId" id="warehouseId" placeholder="Warehouse id" />&nbsp Warehouse id</div>
+      <div class="field"><input type="text" name="buyerId" id="buyerId" placeholder="Buyer id" />&nbsp Buyer id</div>
+      <div class="field"><input type="text" name="totalSum" id="totalSum" placeholder="Total sum" />&nbsp Total sum</div>
+      <div class="field"><input type="text" name="keepingDays" id="keepingDays" placeholder="Keeping days" />&nbsp Keeping days</div>
+      <div class="field"><input type="text" name="collisUnloaded" id="collisUnloaded" placeholder="Collis unloaded" />&nbsp Collis unloaded</div>
+      <div class="field"><input type="text" name="platesNumberUnloading" id="platesNumberUnloading" placeholder="Plates numbers unloading" />&nbsp Plates unloading</div>
+      <div class="field"><input type="text" name="platesNumberLoading" id="platesNumberLoading" placeholder="Plates numbers loading" />&nbsp Plates loading</div>
+      <div class="field"><input type="text" name="status" id="status" placeholder="Status" />&nbsp Status</div>
+      <div class="field"><input type="text" name="comment" id="comment" placeholder="Comment" />&nbsp Comment</div>
+      <div class="field"><input class="checkbox" type="checkbox" name="isUnloadingByWH" id="isUnloadingByWH" />&nbsp Unloading by WH</div>
+      <div class="field"><input class="checkbox" type="checkbox" name="isLoadingByWH" id="isLoadingByWH" />&nbsp Loading by WH</div>
+      <div class="field"><button type="submit" onclick="createOrder()">Confirm</button></div>
+    </div>
+  </form>
+  <div class="field"><th th:switch="${createMessage}">
+    <div th:case="true">Order created!</div>
+    <div th:case="false">Error! Check provided data!</div>
+    <div th:case="null"></div>
+  </th></div>
+</div>
+</body>
+
+<script>
+  function createOrder() {
+    let warehouseId = document.getElementById("warehouseId").value;
+    let buyerId = document.getElementById("buyerId").value;
+    let totalSum = document.getElementById("totalSum").value;
+    let keepingDays = document.getElementById("keepingDays").value;
+    let collisUnloaded = document.getElementById("collisUnloaded").value;
+    let isUnloadingByWH = document.getElementById("isUnloadingByWH").checked;
+    let isLoadingByWH = document.getElementById("isLoadingByWH").checked;
+    let platesNumberUnloading = document.getElementById("platesNumberUnloading").value;
+    let platesNumberLoading = document.getElementById("platesNumberLoading").value;
+    let status = document.getElementById("status").value;
+    let comment = document.getElementById("comment").value;
+
+    let order = {};
+    order.warehouseId = warehouseId;
+    order.buyerId = buyerId;
+    order.totalSum = totalSum;
+    order.keepingDays = keepingDays;
+    order.collisUnloaded = collisUnloaded;
+    order.isUnloadingByWH = isUnloadingByWH;
+    order.isLoadingByWH = isLoadingByWH;
+    order.platesNumberUnloading = platesNumberUnloading;
+    order.platesNumberLoading = platesNumberLoading;
+    order.status = status;
+    order.comment = comment;
+
+    let xmlHttpRequest = new XMLHttpRequest();
+    xmlHttpRequest.open("GET", "http://localhost:8080/create_order" +
+            "/" + warehouseId +
+            "/" + buyerId +
+            "/" + totalSum +
+            "/" + keepingDays +
+            "/" + collisUnloaded +
+            "/" + isUnloadingByWH +
+            "/" + isLoadingByWH +
+            "/" + platesNumberUnloading +
+            "/" + platesNumberLoading +
+            "/" + status +
+            "/" + comment, true);
+    xmlHttpRequest.setRequestHeader("Content-Type", "application/json; charset=utf8");
+    xmlHttpRequest.send(JSON.stringify(order));
+  }
+</script>
+</html>

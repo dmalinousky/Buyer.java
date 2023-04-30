@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About project</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+        .project__description {
+            font-family: monospace;
+            margin: 2% 5%;
+        }
+    </style>
+</head>
+<body>
+    <div class="project__description"></div>
+</body>
+<script>
+    let description = document.querySelector(".project__description");
+    let i = 0;
+    let txt =
+        `$$Work title: Project Warehouse.$$
+        Description (short): Project Warehouse - it's a system, which allows transporter (consignee) to find free space in the warehouse; and to warehouse to post information that free space is available.$$
+        Back-end:$$
+        1. Warehouse.class - it's a model of warehouse.$
+            Fields:$
+            1. String entityTitle;$
+            2. String registrationNumber (= login);$
+            3. String legalAddress;$
+            4. String realAddress;$
+            5. String GPScoordinates;$
+            6. String phoneNumber;$
+            7. String emailAddress;$
+            8. Boolean isTemperatureWH;$
+            9. Boolean isCustomWH;$
+            10. Double spaceFree;$
+            11. Double balance;$
+            12. String status;$
+            13. String password.$
+            Methods:$
+            a) add warehouse to the DB;$
+            b) edit information in the DB;$
+            c) delete warehouse from the DB.$$
+        2. Buyer.class - it's a model of transporter or consignee.$
+            Fields:$
+            1. String entityTitle;$
+            2. String registrationNumber (= login);$
+            3. String legalAddress;$
+            4. String realAddress;$
+            5. String phoneNumber;$
+            6. String emailAddress;$
+            7. Double balance;$
+            8. String status;$
+            9. String password.$
+            Methods:$
+            a) add buyer (transporter) to the DB;$
+            b) edit information in the DB;$
+            c) delete buyer from the DB;$
+            d) see the list of warehouses.$$
+        3. Case.class - a model of warehouse service.$
+            Fields:$
+            1. Integer warehouseId;$
+            2. Integer buyerId;$
+            3. Double totalSum;$
+            4. Integer keepingDays;$
+            5. Integer palletsUnloaded;$
+            6. Boolean isUnloadingByWH;$
+            7. Boolean isLoadingByWH;$
+            8. Boolean isUnloadingByWH;$
+            9. ArrayList<String> plateNumberUnloading;$
+            10. ArrayList<String> plateNumberLoading;$
+            11. String status.$
+            Methods:$
+            a) create case in DB;$
+            b) edit information in the DB (not deleting - opening/closing only).$$
+        4. Admin.class allows to add/edit/block/delete data in any class.$
+            Fields:$
+            1. String login;$
+            2. String password.$$`;
+            
+        typeWriter();
+    
+        function typeWriter() {
+            if (i < Number(txt.length)) {
+                if (txt.charAt(i) === '$') {
+                    scroller();
+                    description.innerHTML += '<br/>';
+                    i++;
+                } else {
+                    description.innerHTML += txt.charAt(i);
+                    i++;
+                }
+            }
+            setTimeout(typeWriter, 1);
+            // setTimeout(function() {window.scrollTo(0, document.body.scrollHeight);}, 10);
+        }
+        
+        function scroller() {
+            window.scrollTo(100, document.body.scrollHeight);
+            }
+</script>
+</html>

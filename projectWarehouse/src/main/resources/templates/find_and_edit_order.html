@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edition mode</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: monospace;
+      margin: 2% 5%;
+    }
+    h1 {
+      text-align: center;
+      font-size: 40px;
+      font-weight: bold;
+    }
+    form {
+      font-family: monospace;
+    }
+    input::placeholder {
+      font-family: monospace;
+    }
+    input {
+      min-width: 25vw;
+      height: 3.5vh;
+      font-family: monospace;
+      font-size: 150%;
+    }
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 5vw;
+      height: 4vh;
+      font-family: monospace;
+      font-weight: bold;
+    }
+    a {
+      text-decoration: none;
+      font-size: inherit;
+    }
+    a:link {
+      color: red;
+    }
+    a:visited {
+      color: red;
+    }
+    a:hover {
+      color: white;
+    }
+    .main_block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .field_container {
+      display: block;
+    }
+    .field {
+      display: flex;
+      align-items: center;
+      min-width: 40vw;
+      margin: 3%;
+    }
+    .checkbox {
+      height: fit-content; 
+      min-width: 1vw;
+    }
+  </style>
+</head>
+<body>
+<div class="main_block">
+  <div><h1>Edit order details</h1></div>
+  <form method="get" th:if="${order == null}">
+    <div class="field"><input type="text" name="searchOrderId" id="searchOrderId" placeholder="Order id"/>&nbsp Order id</div>
+    <div class="field"><button type="submit">Confirm</button></div>
+    <div class="field" style="display: inline; margin-right: 0%" th:text="${editMessage == false ? 'No data was found!' : ''}"></div>
+  </form>
+
+  <form method="post">
+    <div class="field_container" th:if="${order != null}">
+        <div class="field"><input type="text" name="orderId" id="orderId" th:value="${order.orderId} == null ? '' : ${order.orderId}" />&nbsp Order id</div>
+        <div class="field"><input type="text" name="warehouseId" id="warehouseId" th:value="${order.warehouseId} == null ? '' : ${order.warehouseId}" />&nbsp Warehouse id</div>
+        <div class="field"><input type="text" name="buyerId" id="buyerId" th:value="${order.buyerId} == null ? '' : ${order.buyerId}" />&nbsp Buyer id </div>
+        <div class="field"><input type="text" name="totalSum" id="totalSum" th:value="${order.totalSum} == null ? '' : ${order.totalSum}" />&nbsp Total sum</div>
+        <div class="field"><input type="text" name="keepingDays" id="keepingDays" th:value="${order.keepingDays} == null ? '' : ${order.keepingDays}" />&nbsp Keeping days</div>
+        <div class="field"><input type="text" name="collisUnloaded" id="collisUnloaded" th:value="${order.collisUnloaded} == null ? '' : ${order.collisUnloaded}" />&nbsp Collis unloaded</div>
+        <div class="field"><input type="text" name="platesNumberUnloading" id="platesNumberUnloading" th:value="${order.platesNumberUnloading} == null ? '' : ${order.platesNumberUnloading}" />&nbsp Unloading plates</div>
+        <div class="field"><input type="text" name="platesNumberLoading" id="platesNumberLoading" th:value="${order.platesNumberLoading} == null ? '' : ${order.platesNumberLoading}" />&nbsp Loading plates</div>
+        <div class="field"><input type="text" name="status" id="status" th:value="${order.status} == null ? '' : ${order.status}" />&nbsp Status</div>
+        <div class="field"><input type="text" name="comment" id="comment" th:value="${order.comment} == null ? '' : ${order.comment}" />&nbsp Comment</div>
+        <div class="field"><input class="checkbox" type="checkbox" name="isUnloadingByWH" id="isUnloadingByWH" th:checked="${order.isUnloadingByWH}" />&nbsp Unloading by WH</div>
+        <div class="field"><input class="checkbox" type="checkbox" name="isLoadingByWH" id="isLoadingByWH" th:checked="${order.isLoadingByWH}" />&nbsp Loading by WH</div>
+        <div class="field"><button type="submit">Confirm</button></div>
+        <!--    <div class="field"><a th:href="@{/delete_buyer(login=${buyer.login}, registrationNumber=${buyer.registrationNumber})}" target="_blank">Delete my account</a></div>-->
+    </div>
+  </form>
+</div>
+</body>
+</html>
