@@ -72,23 +72,29 @@
     <form method="get" th:if="${buyer == null}">
         <div class="field"><input type="text" name="providedLogin" id="providedLogin" placeholder="Login"/>&nbsp Login</div>
         <div class="field"><input type="text" name="providedPassword" id="providedPassword" placeholder="Password" />&nbsp Password</div>
+        <div class="field"><input type="text" name="providedRegistrationNumber" id="providedRegistrationNumber" placeholder="Registration number" />&nbsp Registration number</div>
         <div class="field"><button type="submit">Confirm</button></div>
         <div class="field" style="display: inline; margin-right: 0%" th:text="${editMessage == false ? 'No data was found!' : ''}"></div>
         <div class="field" style="display: inline; margin-left: 0%" th:if="${editMessage == false}"><a th:href="@{/create_buyer}" target="_blank">Create account?</a></div>
     </form>
-    <div class="field_container" th:if="${buyer != null}">
-        <div class="field"><input type="text" name="login" id="login" th:value="${buyer.login} == null ? '' : ${buyer.login}" />&nbsp Login</div>
-        <div class="field"><input type="text" name="password" id="password" th:value="${buyer.password} == null ? '' : ${buyer.password}" />&nbsp Password</div>
-        <div class="field"><input type="text" name="passwordCheck" id="passwordCheck" th:value="${buyer.password} == null ? '' : ${buyer.password}" />&nbsp Password confirmation </div>
-        <div class="field"><input type="text" name="entityTitle" id="entityTitle" th:value="${buyer.entityTitle} == null ? '' : ${buyer.entityTitle}" />&nbsp Entity title</div>
-        <div class="field"><input type="text" name="registrationNumber" id="registrationNumber1" th:value="${buyer.registrationNumber} == null ? '' : ${buyer.registrationNumber}" />&nbsp Registration number</div>
-        <div class="field"><input type="text" name="legalAddress" id="legalAddress" th:value="${buyer.legalAddress} == null ? '' : ${buyer.legalAddress}" />&nbsp Legal&nbspaddress </div>
-        <div class="field"><input type="text" name="realAddress" id="realAddress" th:value="${buyer.realAddress} == null ? '' : ${buyer.realAddress}" />&nbsp Real&nbspaddress </div>
-        <div class="field"><input type="text" name="phoneNumber" id="phoneNumber" th:value="${buyer.phoneNumber} == null ? '' : ${buyer.phoneNumber}" />&nbsp Phone&nbspnumber </div>
-        <div class="field"><input type="text" name="emailAddress" id="emailAddress" th:value="${buyer.emailAddress} == null ? '' : ${buyer.emailAddress}" />&nbsp E-mail&nbspaddress</div>
-        <div class="field"><button type="submit">Confirm</button></div>
-        <div class="field"><a th:href="@{/delete_buyer(login=${buyer.login}, registrationNumber=${buyer.registrationNumber})}" target="_blank">Delete my account</a></div>
-    </div>
+    <form method="post" th:if="${buyer != null}">
+        <div class="field_container">
+            <div class="field"><input type="text" name="login" id="login" th:value="${buyer.login} == null ? '' : ${buyer.login}" />&nbsp Login</div>
+            <div class="field"><input type="text" name="password" id="password" th:value="${buyer.password} == null ? '' : ${buyer.password}" />&nbsp Password</div>
+            <div class="field"><input type="text" name="passwordCheck" id="passwordCheck" th:value="${buyer.password} == null ? '' : ${buyer.password}" />&nbsp Password confirmation </div>
+            <div class="field"><input type="text" name="entityTitle" id="entityTitle" th:value="${buyer.entityTitle} == null ? '' : ${buyer.entityTitle}" />&nbsp Entity title</div>
+            <div class="field"><input type="text" name="registrationNumber" id="registrationNumber" th:value="${buyer.registrationNumber} == null ? '' : ${buyer.registrationNumber}" />&nbsp Registration number</div>
+            <div class="field"><input type="text" name="legalAddress" id="legalAddress" th:value="${buyer.legalAddress} == null ? '' : ${buyer.legalAddress}" />&nbsp Legal &nbsp address </div>
+            <div class="field"><input type="text" name="realAddress" id="realAddress" th:value="${buyer.realAddress} == null ? '' : ${buyer.realAddress}" />&nbsp Real &nbsp address </div>
+            <div class="field"><input type="text" name="phoneNumber" id="phoneNumber" th:value="${buyer.phoneNumber} == null ? '' : ${buyer.phoneNumber}" />&nbsp Phone &nbsp number </div>
+            <div class="field"><input type="text" name="emailAddress" id="emailAddress" th:value="${buyer.emailAddress} == null ? '' : ${buyer.emailAddress}" />&nbsp E-mail address </div>
+            <div><input style="display: none" type="text" name="buyerId" id="buyerId" th:value="${buyer.buyerId}"  /></div>
+            <div class="field"><button type="submit">Confirm</button></div>
+            <div th:if="${editMessage == true}" class="field">Data has been changed!</div>
+            <div class="field"><a th:href="@{/delete_buyer(login=${buyer.login}, registrationNumber=${buyer.registrationNumber})}" target="_blank">Delete my account</a></div>
+            <div class="field"><a th:href="@{/show_buyer_orders(login=${buyer.login}, registrationNumber=${buyer.registrationNumber}, buyerId=${buyer.buyerId} )}" target="_blank">My orders</a></div>
+        </div>
+    </form>
 </div>
 </body>
 </html>

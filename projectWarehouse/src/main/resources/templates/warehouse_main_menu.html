@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            margin: 2% 5%;
+        }
+        h1 {
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        form {
+            font-family: monospace;
+        }
+        input::placeholder {
+            font-family: monospace;
+        }
+        input {
+            min-width: 25vw;
+            height: 3.5vh;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:link {
+            color: white;
+        }
+        a:visited {
+            color: white;
+        }
+        a:hover {
+            color: red;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 5vw;
+            height: 4vh;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        .main_block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div class="main_block">
+    <div><h1>---WH main menu---</h1></div>
+    <div><a th:href="@{/create_warehouse}" target="_blank"><h1>Create WH</h1></a></div>
+    <div><a th:href="@{/find_and_edit_warehouse}" target="_blank"><h1>Edit WH</h1></a></div>
+    <div><a href="/about_project" target="_blank"><h1>About project</h1></a></div>
+</div>
+</body>
+</html>

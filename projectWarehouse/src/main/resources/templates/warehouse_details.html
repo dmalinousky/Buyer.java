@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Warehouse details</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            font-size: 15px;
+            margin: 2% 5%;
+        }
+        table {
+            border-collapse: collapse;
+            border-width: 0.5px;
+            border-style: dashed;
+            border-color: white;
+        }
+        tr {
+            border-collapse: collapse;
+            border-width: 0.5px;
+            border-style: dashed;
+            border-color: white;
+        }
+        th {
+            border-collapse: collapse;
+            border-width: 0.5px;
+            border-style: dashed;
+            border-color: white;
+        }
+        td {
+            border-collapse: collapse;
+            border-width: 0.5px;
+            border-style: dashed;
+            border-color: white;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:link {
+            color: white;
+        }
+        a:visited {
+            color: white;
+        }
+        a:hover {
+            color: red;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 5vw;
+            height: 4vh;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        .main_block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div class="main_block">
+    <table>
+        <tr>
+            <th> Entity title </th>
+            <th> Registration number </th>
+            <th> Legal address </th>
+            <th> Real address </th>
+            <th> GPS coordinates </th>
+            <th> Phone number </th>
+            <th> E-mail address </th>
+            <th> Temperature WH </th>
+            <th> Custom WH </th>
+            <th> Free space </th>
+        </tr>
+        <tr>
+            <td th:text="${param.entityTitle}"></td>
+            <td th:text="${param.registrationNumber}"></td>
+            <td th:text="${param.legalAddress}"></td>
+            <td th:text="${param.realAddress}"></td>
+            <td th:text="${param.GpsCoordinates}"></td>
+            <td th:text="${param.phoneNumber}"></td>
+            <td th:text="${param.emailAddress}"></td>
+            <td th:text="${param.isTemperatureWH}"></td>
+            <td th:text="${param.isCustomWH}"></td>
+            <td th:text="${param.spaceFree}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

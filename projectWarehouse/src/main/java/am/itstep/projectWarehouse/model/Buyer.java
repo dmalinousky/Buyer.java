@@ -1,9 +1,6 @@
 package am.itstep.projectWarehouse.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +14,7 @@ import java.io.*;
 @Component
 public class Buyer implements Serializable {
     private String entityTitle;
+    @Column(unique = true)
     private String registrationNumber;
     private String legalAddress;
     private String realAddress;
@@ -24,6 +22,7 @@ public class Buyer implements Serializable {
     private String emailAddress;
     private Double balance;
     private String status;
+    @Column(unique = true)
     private String login;
     private String password;
     private Long buyerId;
@@ -52,4 +51,6 @@ public class Buyer implements Serializable {
         }
         return id;
     }
+
+
 }

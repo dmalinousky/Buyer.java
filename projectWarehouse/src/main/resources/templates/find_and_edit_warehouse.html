@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile details</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            margin: 2% 5%;
+        }
+        h1 {
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        form {
+            font-family: monospace;
+        }
+        input::placeholder {
+            font-family: monospace;
+        }
+        input {
+            min-width: 25vw;
+            height: 3.5vh;
+            font-family: monospace;
+            font-size: 150%;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 5vw;
+            height: 4vh;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        a {
+            text-decoration: none;
+            font-size: inherit;
+        }
+        a:link {
+            color: red;
+        }
+        a:visited {
+            color: red;
+        }
+        a:hover {
+            color: white;
+        }
+        .main_block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .field_container {
+            display: block;
+        }
+        .field {
+            display: flex;
+            align-items: center;
+            min-width: 40vw;
+            margin: 3%;
+        }
+        .checkbox {
+            height: fit-content;
+            min-width: 1vw;
+        }
+    </style>
+</head>
+<body>
+<div class="main_block">
+    <div><h1>Edit WH details</h1></div>
+    <form method="get" th:if="${warehouse == null}">
+        <div class="field"><input type="text" name="providedRegistrationNumber" id="providedRegistrationNumber" placeholder="Registration number"/>&nbsp Registration number</div>
+        <div class="field"><input type="text" name="providedLogin" id="providedLogin" placeholder="Login"/>&nbsp Login</div>
+        <div class="field"><input type="text" name="providedPassword" id="providedPassword" placeholder="Password"/>&nbsp Password</div>
+        <div class="field"><button type="submit">Confirm</button></div>
+        <div class="field" style="display: inline; margin-right: 0%" th:text="${editMessage == false ? 'No data was found!' : ''}"></div>
+    </form>
+    <form method="post">
+        <div class="field_container" th:if="${warehouse != null}">
+            <div class="field"><input type="text" name="entityTitle" id="entityTitle" th:value="${warehouse.entityTitle} == null ? '' : ${warehouse.entityTitle}" />&nbsp Entity title</div>
+            <div class="field"><input type="text" name="registrationNumber" id="registrationNumber" th:value="${warehouse.registrationNumber} == null ? '' : ${warehouse.registrationNumber}" />&nbsp Registration number</div>
+            <div class="field"><input type="text" name="legalAddress" id="legalAddress" th:value="${warehouse.legalAddress} == null ? '' : ${warehouse.legalAddress}" />&nbsp legal address </div>
+            <div class="field"><input type="text" name="realAddress" id="realAddress" th:value="${warehouse.realAddress} == null ? '' : ${warehouse.realAddress}" />&nbsp Real address</div>
+            <div class="field"><input type="text" name="GpsCoordinates" id="GpsCoordinates" th:value="${warehouse.GpsCoordinates} == null ? '' : ${warehouse.GpsCoordinates}" />&nbsp GPS coordinates</div>
+            <div class="field"><input type="text" name="phoneNumber" id="phoneNumber" th:value="${warehouse.phoneNumber} == null ? '' : ${warehouse.phoneNumber}" />&nbsp Phone number</div>
+            <div class="field"><input type="text" name="emailAddress" id="emailAddress" th:value="${warehouse.emailAddress} == null ? '' : ${warehouse.emailAddress}" />&nbsp E-mail address</div>
+            <div class="field"><input type="text" name="spaceFree" id="spaceFree" th:value="${warehouse.spaceFree} == null ? '' : ${warehouse.spaceFree}" />&nbsp Space free</div>
+            <div class="field"><input type="text" name="balance" id="balance" th:value="${warehouse.balance} == null ? '' : ${warehouse.balance}" />&nbsp Balance</div>
+            <div class="field"><input type="text" name="status" id="status" th:value="${warehouse.status} == null ? '' : ${warehouse.status}" />&nbsp Status</div>
+            <div class="field"><input type="text" name="login" id="login" th:value="${warehouse.login} == null ? '' : ${warehouse.login}" />&nbsp Login</div>
+            <div class="field"><input type="text" name="password" id="password" th:value="${warehouse.password} == null ? '' : ${warehouse.password}" />&nbsp Password</div>
+            <div class="field"><input type="text" name="warehouseId" id="warehouseId" th:value="${warehouse.warehouseId} == null ? '' : ${warehouse.warehouseId}" />&nbsp Warehouse id</div>
+            <div class="field"><input class="checkbox" type="checkbox" name="isTemperatureWH" id="isTemperatureWH" th:checked="${warehouse.isTemperatureWH}" />&nbsp Temperature WH</div>
+            <div class="field"><input class="checkbox" type="checkbox" name="isCustomWH" id="isCustomWH" th:checked="${warehouse.isCustomWH}" />&nbsp Custom WH</div>
+            <div class="field"><button type="submit">Confirm</button></div>
+            <div class="field"><a th:href="@{/delete_warehouse(login=${warehouse.login}, registrationNumber=${warehouse.registrationNumber})}" target="_blank">Delete my account</a></div>
+            <div class="field"><a th:href="@{/show_warehouse_orders(login=${warehouse.login}, registrationNumber=${warehouse.registrationNumber}, warehouseId=${warehouse.warehouseId})}" target="_blank">My orders</a></div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

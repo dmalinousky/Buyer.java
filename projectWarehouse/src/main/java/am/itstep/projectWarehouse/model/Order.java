@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
+import java.io.*;
 
 @Entity
 @Table(name = "orders")
@@ -19,6 +19,8 @@ import java.io.Serializable;
 public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Column(unique = true)
 	private Long orderId;
     private Long warehouseId;
 	private Long buyerId;
@@ -33,7 +35,8 @@ public class Order implements Serializable {
 	private String comment;
 
 	@JsonCreator
-	public Order(Long orderId,
+	public Order(Long id,
+				 @JsonProperty("orderId") Long orderId,
 				 @JsonProperty("warehouseId") Long warehouseId,
 				 @JsonProperty("buyerId") Long buyerId,
 				 @JsonProperty("totalSum") Double totalSum,
@@ -45,6 +48,7 @@ public class Order implements Serializable {
 				 @JsonProperty("platesNumberLoading") String platesNumberLoading,
 				 @JsonProperty("status") String status,
 				 @JsonProperty("comment") String comment) {
+		this.id = id;
 		this.orderId = orderId;
 		this.warehouseId = warehouseId;
 		this.buyerId = buyerId;
@@ -57,5 +61,30 @@ public class Order implements Serializable {
 		this.platesNumberLoading = platesNumberLoading;
 		this.status = status;
 		this.comment = comment;
+	}
+
+	public Long orderIdGenerator() {
+		Long id = null;
+		File file = new File(System.getProperty("user.dir") + File.separator + "projectWarehouse" + File.separator + "src" + File.separator + "main" + File.separator + "resources"  + File.separator + "order_id_generator.txt");
+		if (file.exists()) {
+			BufferedReader br = null;
+			BufferedWriter bw = null;
+			try {
+				br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+				id = Long.parseLong(br.readLine()) + 1;
+				bw = new BufferedWriter(new PrintWriter(file));
+				bw.write(String.valueOf(id));
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			} finally {
+				try {
+					br.close();
+					bw.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		return id;
 	}
 }

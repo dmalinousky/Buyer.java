@@ -70,12 +70,12 @@
             <div class="field"><input type="text" name="emailAddress" id="emailAddress" placeholder="E-mail address" /></div>
             <div class="field"><button type="submit">Register</button></div>
         </div>
+        <div class="field"><th th:switch="${createMessage}">
+            <div th:case="true">Account created!</div>
+            <div th:case="false">Error! Check provided data!</div>
+            <div th:case="null"></div>
+        </th></div>
     </form>
-    <div class="field"><th th:switch="${createMessage}">
-        <div th:case="true">Account created!</div>
-        <div th:case="false">Error! Check provided data!</div>
-        <div th:case="null"></div>
-    </th></div>
 </div>
 </body>
 </html>

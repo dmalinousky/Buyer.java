@@ -5,7 +5,7 @@ import am.itstep.projectWarehouse.model.Warehouse;
 public interface WarehouseDaoService {
     boolean createWarehouse(Warehouse warehouse);
 
-    Warehouse editWarehouse(String login, String password);
+    boolean editWarehouse(Long warehouseId, Warehouse warehouse);
 
-    boolean deleteWarehouse(String registrationNumber);
+    boolean deleteWarehouse(Warehouse warehouse);
 }

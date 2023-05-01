@@ -7,47 +7,32 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 
 @Entity
-@Table
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Component
 public class Warehouse implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "Id")
     private Long id;
-//    @Column(name = "EntityTitle")
-    private String entityTitle;
-//    @Column(name = "RegistrationNumber")
-    private String registrationNumber;
-//    @Column(name = "LegalAddress")
-    private String legalAddress;
-//    @Column(name = "RealAddress")
-    private String realAddress;
-//    @Column(name = "GpsCoordinates")
-    private String GpsCoordinates;
-//    @Column(name = "PhoneNumber")
-    private String phoneNumber;
-//    @Column(name = "EmailAddress")
-    private String emailAddress;
-//    @Column(name = "IsTemperatureWH")
-    private Boolean isTemperatureWH;
-//    @Column(name = "IsCustomWH")
-    private Boolean isCustomWH;
-//    @Column(name = "SpaceFree")
-    private Double spaceFree;
-//    @Column(name = "Balance")
-    private Double balance;
-//    @Column(name = "Status")
-    private String status;
-//    @Column(name = "Login")
-    private String login;
-//    @Column(name = "Password")
-    private String password;
-//    @Column(name = "WarehouseId")
+    @Column(unique = true)
     private Long warehouseId;
+    private String entityTitle;
+    @Column(unique = true)
+    private String registrationNumber;
+    private String legalAddress;
+    private String realAddress;
+    private String GpsCoordinates;
+    private String phoneNumber;
+    private String emailAddress;
+    private Boolean isTemperatureWH;
+    private Boolean isCustomWH;
+    private Double spaceFree;
+    private Double balance;
+    private String status;
+    @Column(unique = true)
+    private String login;
+    private String password;
 
 
     public Long warehouseIdGenerator() {

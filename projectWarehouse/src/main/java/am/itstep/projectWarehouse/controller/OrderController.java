@@ -1,10 +1,10 @@
 package am.itstep.projectWarehouse.controller;
 
+import am.itstep.projectWarehouse.model.Buyer;
 import am.itstep.projectWarehouse.model.Order;
+import am.itstep.projectWarehouse.model.Warehouse;
 import am.itstep.projectWarehouse.service.OrderDaoImpl;
 import jakarta.servlet.ServletRequest;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Optional;
 
 //@RestController
 @AllArgsConstructor
@@ -49,14 +48,15 @@ public class OrderController {
         System.out.println(isLoadingByWH);
         if (
                 warehouseId != null && !warehouseId.equals("") &&
-                        buyerId != null && totalSum != null &&
-                        keepingDays != null && collisUnloaded != null &&
-                        isUnloadingByWH != null && isLoadingByWH != null &&
-                        platesNumberUnloading != null && !platesNumberUnloading.equals("") &&
-                        platesNumberLoading != null && !platesNumberLoading.equals("") &&
-                        status != null && !status.equals("") && comment != null && !comment.equals("")
+                buyerId != null && totalSum != null &&
+                keepingDays != null && collisUnloaded != null &&
+                isUnloadingByWH != null && isLoadingByWH != null &&
+                platesNumberUnloading != null && !platesNumberUnloading.equals("") &&
+                platesNumberLoading != null && !platesNumberLoading.equals("") &&
+                status != null && !status.equals("") && comment != null && !comment.equals("")
         ) {
             Order order = new Order();
+            order.setOrderId(order.orderIdGenerator());
             order.setWarehouseId(warehouseId);
             order.setBuyerId(buyerId);
             order.setTotalSum(totalSum);
@@ -90,9 +90,9 @@ public class OrderController {
         Boolean editMessage = null;
         Order order = null;
         if (searchOrderId != null) {
-            Optional<Order> optionalOrder = this.getOrderDaoImpl().findOrder(searchOrderId);
-            if (optionalOrder.isPresent()) {
-                order = optionalOrder.get();
+            Order optionalOrder = this.getOrderDaoImpl().findOrder(searchOrderId);
+            if (optionalOrder != null && optionalOrder != null) {
+                order = optionalOrder;
                 this.getOrderDaoImpl().editOrder(searchOrderId, order);
                 editMessage = true;
             } else {
@@ -157,20 +157,57 @@ public class OrderController {
         Boolean deleteMessage = null;
         Order order = null;
         if (deleteOrderId != null) {
-            Optional<Order> optionalOrder = this.getOrderDaoImpl().findOrder(deleteOrderId);
-            if (optionalOrder.isPresent()) {
-                order = optionalOrder.get();
+            Order optionalOrder = this.getOrderDaoImpl().findOrder(deleteOrderId);
+            if (optionalOrder != null) {
+                order = optionalOrder;
                 if (this.getOrderDaoImpl().deleteOrder(order)) {
                     deleteMessage = true;
                 }
             } else {
                 deleteMessage = false;
             }
-
         }
         model.addAttribute("deleteMessage", deleteMessage);
 
         return "delete_order";
+    }
+
+    @GetMapping("/show_warehouse_orders")
+    public String showWarehouseOrdersControl(
+            @RequestParam(name = "login", required = false) String login,
+            @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
+            @RequestParam(name = "warehouseId", required = false) Long warehouseId,
+            Model model
+    ) {
+        System.out.println("IN CON MET");
+        if (
+                login != null && !login.equals("") &&
+                registrationNumber != null && !registrationNumber.equals("") &&
+                warehouseId != null
+        ) {
+            System.out.println("IN IF");
+            model.addAttribute("orders", orderDaoImpl.showAllOrders(warehouseId, new Warehouse()));
+        }
+        return "show_warehouse_orders";
+    }
+
+
+    @GetMapping("/show_buyer_orders")
+    public String showBuyerOrdersControl(
+            @RequestParam(name = "login", required = false) String login,
+            @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
+            @RequestParam(name = "buyerId", required = false) Long buyerId,
+            Model model
+    ) {
+        if (
+                login != null && !login.equals("") &&
+                registrationNumber != null && !registrationNumber.equals("") &&
+                buyerId != null
+        ) {
+            System.out.println("NEARBY");
+            model.addAttribute("orders", orderDaoImpl.showAllOrders(buyerId, new Buyer()));
+        }
+        return "show_buyer_orders";
     }
 
 

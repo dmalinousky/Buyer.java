@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            margin: 2% 5%;
+        }
+        h1 {
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        form {
+            font-family: monospace;
+        }
+        input::placeholder {
+            font-family: monospace;
+        }
+        input {
+            min-width: 25vw;
+            height: 3.5vh;
+            font-family: monospace;
+            font-size: 150%;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 5vw;
+            height: 4vh;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        .main_block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:link {
+            color: white;
+        }
+        a:visited {
+            color: white;
+        }
+        a:hover {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="main_block">
+    <div class="menu_item"><a th:href="@{/buyer_main_menu}" target="_blank"><h1>Freight owner</h1></a></div>
+    <div class="menu_item"><a th:href="@{/warehouse_main_menu}" target="_blank"><h1>Warehouse</h1></a></div>
+    <div><a href="/about_project" target="_blank"><h1>About project</h1></a></div>
+    </div>
+</body>
+</html>

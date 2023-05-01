@@ -1,7 +1,10 @@
 package am.itstep.projectWarehouse.controller;
 
 import am.itstep.projectWarehouse.model.Buyer;
+import am.itstep.projectWarehouse.model.Warehouse;
 import am.itstep.projectWarehouse.service.BuyerDaoImpl;
+import am.itstep.projectWarehouse.service.WarehouseDaoImpl;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @NoArgsConstructor
@@ -85,19 +90,20 @@ public class BuyerController {
 
 
     @GetMapping ("/edit_buyer")
-    public String editBuyerControl(
-            @RequestParam(name = "providedLogin", required = false) String login,
+    public String editBuyerControl(@RequestParam(name = "providedLogin", required = false) String login,
             @RequestParam(name = "providedPassword", required = false) String password,
+            @RequestParam(name = "providedRegistrationNumber", required = false) String registrationNumber,
             Model model
     ) {
         Buyer buyer = null;
         Boolean editMessage = null; // Shows user info if the account was found
-        if (login != null && !login.equals("") && password != null && !password.equals("")) {
+        if (login != null && !login.equals("") &&
+            password != null && !password.equals("") &&
+            registrationNumber != null && !registrationNumber.equals("")
+        ) {
             // Finding Buyer object and putting provided data into it
-            buyer = buyerDaoImpl.editBuyer(login, password);
+            buyer = buyerDaoImpl.findBuyer(login, password, registrationNumber);
             if (buyer != null) {
-                editMessage = true;
-            } else {
                 editMessage = false;
             }
             model.addAttribute("buyer", buyer);
@@ -107,7 +113,66 @@ public class BuyerController {
         }
         model.addAttribute("buyer", buyer);
         model.addAttribute("editMessage", editMessage);
+        return "edit_buyer";
+    }
 
+
+    @PostMapping("/edit_buyer")
+    public String editBuyerControl(Model model,
+            @RequestParam(name = "entityTitle", required = false) String entityTitle,
+            @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
+            @RequestParam(name = "legalAddress", required = false) String legalAddress,
+            @RequestParam(name = "realAddress", required = false) String realAddress,
+            @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
+            @RequestParam(name = "emailAddress", required = false) String emailAddress,
+            @RequestParam(name = "login", required = false) String login,
+            @RequestParam(name = "password", required = false) String password,
+            @RequestParam(name = "passwordCheck", required = false) String passwordCheck,
+            @RequestParam(name = "buyerId", required = false) Long buyerId
+    ) {
+        Buyer buyer = null;
+        Boolean editMessage = null; // Shows user info if the account was found
+        if (
+                entityTitle != null && !entityTitle.equals("") &&
+                registrationNumber != null && !registrationNumber.equals("") &&
+                legalAddress != null && !legalAddress.equals("") &&
+                realAddress != null && !realAddress.equals("") &&
+                phoneNumber != null && !phoneNumber.equals("") &&
+                emailAddress != null && !emailAddress.equals("") &&
+                login != null && !login.equals("") &&
+                password != null && !password.equals("") &&
+                passwordCheck != null && !passwordCheck.equals("") &&
+                buyerId != null
+        ) {
+            // In case of incorrect password confirmation
+            if (!password.equals(passwordCheck)) {
+                editMessage = false;
+                model.addAttribute("editMessage", editMessage);
+                return "edit_warehouse";
+
+                // In case of correct password confirmation
+            } else {
+                // Editing Buyer object and putting provided data into it
+                buyer = new Buyer();
+                buyer.setEntityTitle(entityTitle);
+                buyer.setRegistrationNumber(registrationNumber);
+                buyer.setLegalAddress(legalAddress);
+                buyer.setRealAddress(realAddress);
+                buyer.setPhoneNumber(phoneNumber);
+                buyer.setEmailAddress(emailAddress);
+                buyer.setLogin(login);
+                buyer.setPassword(password);
+                buyer.setBuyerId(buyerId);
+                System.out.println(this.getBuyerDaoImpl().editBuyer(buyer));
+                if (this.getBuyerDaoImpl().editBuyer(buyer)) {
+                    editMessage = true;
+                } else {
+                    editMessage = false;
+                }
+            }
+            model.addAttribute("buyer", buyer);
+            model.addAttribute("editMessage", editMessage);
+        }
         return "edit_buyer";
     }
 
@@ -119,7 +184,6 @@ public class BuyerController {
             @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
             Model model
     ) {
-        System.out.println(login + "" + password + "" + registrationNumber);
         Boolean deleteMessage = false;
 
         if (
@@ -128,7 +192,7 @@ public class BuyerController {
                 registrationNumber != null && !registrationNumber.equals("")
         ) {
             // Getting Buyer registration number and deleting from DB + sending delete notification
-            buyerDaoImpl.deleteBuyer(registrationNumber);
+            buyerDaoImpl.deleteBuyer(login, password, registrationNumber);
             deleteMessage = true;
         }
         model.addAttribute("deleteMessage", deleteMessage);
@@ -136,14 +200,9 @@ public class BuyerController {
         return "delete_buyer";
     }
 
+
     @GetMapping ("/buyer_main_menu")
-    public String createBuyerControl() {
-
+    public String BuyerMainMenuControl() {
         return "buyer_main_menu";
-    }
-
-    @GetMapping ("/about_project")
-    public String aboutProjectControl() {
-        return "about_project";
     }
 }

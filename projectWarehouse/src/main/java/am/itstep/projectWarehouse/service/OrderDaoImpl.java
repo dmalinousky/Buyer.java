@@ -1,15 +1,22 @@
 package am.itstep.projectWarehouse.service;
 
+import am.itstep.projectWarehouse.model.Buyer;
 import am.itstep.projectWarehouse.model.Order;
+import am.itstep.projectWarehouse.model.Warehouse;
 import am.itstep.projectWarehouse.repository.OrderRepository;
+import jakarta.persistence.Entity;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,8 +36,8 @@ public class OrderDaoImpl implements OrderDaoService {
     }
 
     @Transactional
-    public Optional<Order> findOrder(Long orderId) {
-        return orderRepository.findById(orderId);
+    public Order findOrder(Long orderId) {
+        return orderRepository.findByOderId(orderId);
     }
 
     @Transactional
@@ -60,13 +67,30 @@ public class OrderDaoImpl implements OrderDaoService {
             query.setParameter("platesNumberLoading", order.getPlatesNumberLoading());
             query.setParameter("status", order.getStatus());
             query.setParameter("comment", order.getComment());
-            query.setParameter("orderId", String.valueOf(orderId));
+            query.setParameter("orderId", order.getOrderId());
             query.executeUpdate();
             transaction.commit();
             session.close();
             return true;
         }
         return false;
+    }
+
+
+    @Transactional
+    public List<Order> showAllOrders(Long buyerId, Buyer buyer) {
+        if (orderRepository != null) {
+            return orderRepository.findByBuyerId(buyerId);
+        }
+        return null;
+    }
+
+    @Transactional
+    public List<Order> showAllOrders(Long warehouseId, Warehouse warehouse) {
+        if (orderRepository != null) {
+            return orderRepository.findByWarehouseId(warehouseId);
+        }
+        return null;
     }
 
     @Transactional

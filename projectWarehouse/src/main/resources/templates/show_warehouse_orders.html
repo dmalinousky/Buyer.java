@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            margin: 2% 5%;
+        }
+        table {
+            border-collapse: collapse;
+            border-width: 0.5px;
+            border-style: dashed;
+            border-color: white;
+        }
+        tr {
+            border-collapse: collapse;
+            border-width: 0.5px;
+            border-style: dashed;
+            border-color: white;
+        }
+        th {
+            border-collapse: collapse;
+            border-width: 0.5px;
+            border-style: dashed;
+            border-color: white;
+        }
+        td {
+            border-collapse: collapse;
+            border-width: 0.5px;
+            border-style: dashed;
+            border-color: white;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:link {
+            color: white;
+        }
+        a:visited {
+            color: white;
+        }
+        a:hover {
+            color: red;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 5vw;
+            height: 4vh;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        .main_block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div th:text="${orders != null ? 'y' : 'n'}"></div>
+<div class="main_block" th:if="${orders != null}">
+    <table>
+        <tr>
+            <th>&nbsp Warehouse id &nbsp</th>
+            <th>&nbsp Total sum &nbsp</th>
+            <th>&nbsp Days keeping &nbsp</th>
+            <th>&nbsp Collis unloaded &nbsp</th>
+            <th>&nbsp Unloading by WH &nbsp</th>
+            <th>&nbsp Loading by WH &nbsp</th>
+            <th>&nbsp Plates unloading &nbsp</th>
+            <th>&nbsp Plates loading &nbsp</th>
+            <th>&nbsp Status &nbsp</th>
+            <th>&nbsp Comment &nbsp</th>
+            <th>&nbsp Edit &nbsp</th>
+        </tr>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.warehouseId}"></td>
+            <td th:text="${order.totalSum}"></td>
+            <td th:text="${order.keepingDays}"></td>
+            <td th:text="${order.collisUnloaded}"></td>
+            <td th:text="${order.isUnloadingByWH}"></td>
+            <td th:text="${order.isLoadingByWH}"></td>
+            <td th:text="${order.platesNumberUnloading}"></td>
+            <td th:text="${order.platesNumberLoading}"></td>
+            <td th:text="${order.status}"></td>
+            <td th:text="${order.comment}"></td>
+            <td><a th:href="@{/find_and_edit_order(orderId=${order.orderId})}" target="_blank">More</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

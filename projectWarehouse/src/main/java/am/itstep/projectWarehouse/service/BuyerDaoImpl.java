@@ -62,15 +62,16 @@ public class BuyerDaoImpl implements BuyerDaoService {
     }
 
     @Override
-    public Buyer editBuyer(String login, String password) {
+    public Buyer findBuyer(String login, String password, String registrationNumber) {
         Connection connection = DBConnection.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            String query = "SELECT * FROM buyers WHERE login = ? AND password = ?";
+            String query = "SELECT * FROM buyers WHERE login = ? AND password = ? AND registrationNumber = ?";
             ps = connection.prepareStatement(query);
             ps.setString(1, login);
             ps.setString(2, password);
+            ps.setString(3, registrationNumber);
             rs = ps.executeQuery();
             Buyer buyer = new Buyer();
             while (rs.next()) {
@@ -84,6 +85,7 @@ public class BuyerDaoImpl implements BuyerDaoService {
                 buyer.setStatus(rs.getString("Status"));
                 buyer.setLogin(rs.getString("Login"));
                 buyer.setPassword(rs.getString("Password"));
+                buyer.setBuyerId(rs.getLong("BuyerId"));
                 return buyer;
             }
             return null;
@@ -99,15 +101,60 @@ public class BuyerDaoImpl implements BuyerDaoService {
         }
     }
 
+
     @Override
-    public boolean deleteBuyer(String registrationNumber) {
+    public Boolean editBuyer(Buyer buyer) {
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement ps = null;
+        try {
+            if (buyer != null) {
+                String query = "UPDATE buyers SET " +
+                        "entityTitle = ? , " +
+                        "registrationNumber = ? , " +
+                        "legalAddress = ? , " +
+                        "realAddress = ? , " +
+                        "phoneNumber = ? , " +
+                        "emailAddress = ? , " +
+                        "login = ? , " +
+                        "password = ? WHERE buyerId = ?";
+                ps = connection.prepareStatement(query);
+                ps.setString(1, buyer.getEntityTitle());
+                ps.setString(2, buyer.getRegistrationNumber());
+                ps.setString(3, buyer.getLegalAddress());
+                ps.setString(4, buyer.getRealAddress());
+                ps.setString(5, buyer.getPhoneNumber());
+                ps.setString(6, buyer.getEmailAddress());
+                ps.setString(7, buyer.getLogin());
+                ps.setString(8, buyer.getPassword());
+                ps.setLong(9, buyer.getBuyerId());
+                ps.executeUpdate();
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                ps.close();
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
+    }
+
+
+    @Override
+    public boolean deleteBuyer(String login, String password, String registrationNumber) {
         Connection connection = DBConnection.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            String query = "DELETE FROM buyers WHERE registrationNumber = ?";
+            String query = "DELETE FROM buyers WHERE login = ? AND password = ? AND registrationNumber = ?";
             ps = connection.prepareStatement(query);
-            ps.setString(1, registrationNumber);
+            ps.setString(1, login);
+            ps.setString(2, password);
+            ps.setString(3, registrationNumber);
             return ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);

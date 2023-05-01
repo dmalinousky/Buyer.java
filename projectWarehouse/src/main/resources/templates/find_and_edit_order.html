@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Edition mode</title>
+  <title>Profile details</title>
   <style>
     body {
       background-color: black;
@@ -74,7 +74,7 @@
 <div class="main_block">
   <div><h1>Edit order details</h1></div>
   <form method="get" th:if="${order == null}">
-    <div class="field"><input type="text" name="searchOrderId" id="searchOrderId" placeholder="Order id"/>&nbsp Order id</div>
+    <div class="field"><input type="text" name="searchOrderId" id="searchOrderId" placeholder="Order id" th:value="${param.orderId}" />&nbsp Order id</div>
     <div class="field"><button type="submit">Confirm</button></div>
     <div class="field" style="display: inline; margin-right: 0%" th:text="${editMessage == false ? 'No data was found!' : ''}"></div>
   </form>
