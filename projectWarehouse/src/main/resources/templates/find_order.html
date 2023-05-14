@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Deleting mode</title>
+  <title>Profile details</title>
   <style>
     body {
       background-color: black;
@@ -36,11 +36,27 @@
       font-family: monospace;
       font-weight: bold;
     }
+    a {
+      text-decoration: none;
+      font-size: inherit;
+    }
+    a:link {
+      color: red;
+    }
+    a:visited {
+      color: red;
+    }
+    a:hover {
+      color: white;
+    }
     .main_block {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+    }
+    .field_container {
+      display: block;
     }
     .field {
       display: flex;
@@ -48,33 +64,16 @@
       min-width: 40vw;
       margin: 3%;
     }
-    /*.menu_item {*/
-    /*}*/
-    a {
-      text-decoration: none;
-    }
-    a:link {
-      color: white;
-    }
-    a:visited {
-      color: white;
-    }
-    a:hover {
-      color: red;
-    }
   </style>
 </head>
 <body>
 <div class="main_block">
-  <div class="menu_item"><a th:href="@{/buyer_main_menu}" target="_blank"><h1>Main menu</h1></a></div>
-  <form method="post" th:if="${deleteMessage == null}">
-    <div><h2>Sure you want to delete the account?</h2></div>
-    <div class="field"><input type="text" name="login" id="login" />&nbsp Login</div>
-    <div class="field"><input type="text" name="password" id="password" placeholder="Password" />&nbsp Password</div>
-    <div class="field"><input type="text" name="registrationNumber" id="registrationNumber" th:value="${param.registrationNumber}" />&nbsp Registration number</div>
+  <div><h1>Edit order details</h1></div>
+  <form method="post">
+    <div class="field"><input type="text" name="searchOrderId" id="searchOrderId" placeholder="Order id" th:value="${param.orderId}" />&nbsp Order id</div>
     <div class="field"><button type="submit">Confirm</button></div>
+    <div class="field" style="display: inline; margin-right: 0%" th:text="${findMessage == false ? 'No data was found!' : ''}"></div>
   </form>
-    <div style="text-align: center" th:text="${deleteMessage == true ? 'Your data has been deleted!' : ''}"></div>
 </div>
 </body>
 </html>

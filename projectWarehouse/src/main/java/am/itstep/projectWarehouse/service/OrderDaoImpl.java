@@ -4,20 +4,15 @@ import am.itstep.projectWarehouse.model.Buyer;
 import am.itstep.projectWarehouse.model.Order;
 import am.itstep.projectWarehouse.model.Warehouse;
 import am.itstep.projectWarehouse.repository.OrderRepository;
-import jakarta.persistence.Entity;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderDaoImpl implements OrderDaoService {
@@ -25,6 +20,7 @@ public class OrderDaoImpl implements OrderDaoService {
     private OrderRepository orderRepository;
     @Autowired
     private SessionFactory sessionFactory;
+
 
     @Transactional
     public boolean createOrder(Order order) {
@@ -35,10 +31,12 @@ public class OrderDaoImpl implements OrderDaoService {
         return false;
     }
 
+
     @Transactional
     public Order findOrder(Long orderId) {
         return orderRepository.findByOderId(orderId);
     }
+
 
     @Transactional
     public boolean editOrder(Long orderId, Order order) {
@@ -85,6 +83,7 @@ public class OrderDaoImpl implements OrderDaoService {
         return null;
     }
 
+
     @Transactional
     public List<Order> showAllOrders(Long warehouseId, Warehouse warehouse) {
         if (orderRepository != null) {
@@ -92,6 +91,7 @@ public class OrderDaoImpl implements OrderDaoService {
         }
         return null;
     }
+
 
     @Transactional
     public boolean deleteOrder(Order order) {

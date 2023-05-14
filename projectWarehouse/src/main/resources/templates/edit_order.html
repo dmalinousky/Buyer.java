@@ -73,15 +73,9 @@
 <body>
 <div class="main_block">
   <div><h1>Edit order details</h1></div>
-  <form method="get" th:if="${order == null}">
-    <div class="field"><input type="text" name="searchOrderId" id="searchOrderId" placeholder="Order id" th:value="${param.orderId}" />&nbsp Order id</div>
-    <div class="field"><button type="submit">Confirm</button></div>
-    <div class="field" style="display: inline; margin-right: 0%" th:text="${editMessage == false ? 'No data was found!' : ''}"></div>
-  </form>
-
-  <form method="post">
-    <div class="field_container" th:if="${order != null}">
-        <div class="field"><input type="text" name="orderId" id="orderId" th:value="${order.orderId} == null ? '' : ${order.orderId}" />&nbsp Order id</div>
+  <form method="post" action="edit_order">
+    <div class="field_container" th:if="${editMessage == null}">
+        <div class="field"><input type="text" readonly name="orderId" id="orderId" th:value="${order.orderId} == null ? '' : ${order.orderId}" />&nbsp Order id</div>
         <div class="field"><input type="text" name="warehouseId" id="warehouseId" th:value="${order.warehouseId} == null ? '' : ${order.warehouseId}" />&nbsp Warehouse id</div>
         <div class="field"><input type="text" name="buyerId" id="buyerId" th:value="${order.buyerId} == null ? '' : ${order.buyerId}" />&nbsp Buyer id </div>
         <div class="field"><input type="text" name="totalSum" id="totalSum" th:value="${order.totalSum} == null ? '' : ${order.totalSum}" />&nbsp Total sum</div>
@@ -94,9 +88,12 @@
         <div class="field"><input class="checkbox" type="checkbox" name="isUnloadingByWH" id="isUnloadingByWH" th:checked="${order.isUnloadingByWH}" />&nbsp Unloading by WH</div>
         <div class="field"><input class="checkbox" type="checkbox" name="isLoadingByWH" id="isLoadingByWH" th:checked="${order.isLoadingByWH}" />&nbsp Loading by WH</div>
         <div class="field"><button type="submit">Confirm</button></div>
-        <!--    <div class="field"><a th:href="@{/delete_buyer(login=${buyer.login}, registrationNumber=${buyer.registrationNumber})}" target="_blank">Delete my account</a></div>-->
+    </div>
+    <div th:text="${editMessage == true ? 'Data has been updated!' : ''}">
+<!--        <a onclick="javascript:history.go(-1); return false;">Back?</a>-->
     </div>
   </form>
+
 </div>
 </body>
 </html>

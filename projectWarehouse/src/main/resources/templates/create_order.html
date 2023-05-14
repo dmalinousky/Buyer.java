@@ -73,7 +73,7 @@
 <body>
 <div class="main_block">
   <div><h1>Order creation</h1></div>
-  <form method="get">
+  <form method="post">
     <div class="field_container">
       <div class="field"><input type="text" name="warehouseId" id="warehouseId" placeholder="Warehouse id" />&nbsp Warehouse id</div>
       <div class="field"><input type="text" name="buyerId" id="buyerId" placeholder="Buyer id" />&nbsp Buyer id</div>
@@ -125,7 +125,7 @@
     order.comment = comment;
 
     let xmlHttpRequest = new XMLHttpRequest();
-    xmlHttpRequest.open("GET", "http://localhost:8080/create_order" +
+    xmlHttpRequest.open("get", "http://localhost:8080/create_order" +
             "/" + warehouseId +
             "/" + buyerId +
             "/" + totalSum +
@@ -138,6 +138,7 @@
             "/" + status +
             "/" + comment, true);
     xmlHttpRequest.setRequestHeader("Content-Type", "application/json; charset=utf8");
+    alert(JSON.stringify(order))
     xmlHttpRequest.send(JSON.stringify(order));
   }
 </script>
