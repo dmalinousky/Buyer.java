@@ -10,7 +10,7 @@ public interface BuyerDaoService {
 
     Buyer findBuyer(String login, String password, String registrationNumber);
 
-    boolean deleteBuyer(String login, String password, String registrationNumber);
+    int deleteBuyer(String login, String password, String registrationNumber);
 
     public Boolean editBuyer(Buyer buyer);
 

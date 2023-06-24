@@ -83,8 +83,8 @@
             <div><input style="display: none" type="text" name="buyerId" id="buyerId" th:value="${buyer.buyerId}"  /></div>
             <div class="field"><button type="submit">Confirm</button></div>
             <div th:if="${editMessage == true}" class="field">Data has been changed!</div>
-            <div class="field"><a th:href="@{/delete_buyer(login=${buyer.login}, registrationNumber=${buyer.registrationNumber})}" target="_blank">Delete my account</a></div>
-            <div class="field"><a th:href="@{/show_buyer_orders(login=${buyer.login}, registrationNumber=${buyer.registrationNumber}, buyerId=${buyer.buyerId} )}" target="_blank">My orders</a></div>
+            <div class="field"><a th:href="@{/buyer_delete(registrationNumber=${buyer.registrationNumber})}" target="_blank">Delete my account</a></div>
+            <div class="field"><a th:href="@{/buyer_show_orders(registrationNumber=${buyer.registrationNumber}, buyerId=${buyer.buyerId} )}" target="_blank">My orders</a></div>
         </div>
     </form>
 </div>

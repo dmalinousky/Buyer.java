@@ -25,7 +25,12 @@ public class BuyerController {
     private BuyerDaoImpl buyerDaoImpl;
 
 
-    @GetMapping ("/create_buyer")
+    @GetMapping ("/buyer_create")
+    public String createBuyerControl() {
+        return "buyer_create";
+    }
+
+    @PostMapping ("/buyer_create")
     public String createBuyerControl(
             @RequestParam(name = "entityTitle", required = false) String entityTitle,
             @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
@@ -57,7 +62,7 @@ public class BuyerController {
             if (!password.equals(passwordCheck)) {
                 createMessage = false;
                 model.addAttribute("createMessage", createMessage);
-                return "create_buyer";
+                return "buyer_create";
 
                 // In case of correct password confirmation
             } else {
@@ -84,17 +89,17 @@ public class BuyerController {
         }
         model.addAttribute("createMessage", createMessage);
 
-        return "create_buyer";
+        return "buyer_create";
     }
 
 
-    @GetMapping ("/find_buyer")
+    @GetMapping ("/buyer_find")
     public String findBuyerControl() {
-        return "find_buyer";
+        return "buyer_find";
     }
 
 
-    @PostMapping ("/find_buyer")
+    @PostMapping ("/buyer_find")
     public ModelAndView findBuyerControl(
             @RequestParam(name = "providedLogin", required = false) String login,
             @RequestParam(name = "providedPassword", required = false) String password,
@@ -116,19 +121,19 @@ public class BuyerController {
                 editMessage = false;
                 model.addAttribute("buyer", buyer);
                 model.addAttribute("editMessage", editMessage);
-                return new ModelAndView("forward:/edit_buyer", model);
+                return new ModelAndView("forward:/buyer_edit", model);
             } else {
                 // In case Buyer object is null
                 editMessage = false;
                 model.addAttribute("editMessage", editMessage);
-                return new ModelAndView("find_buyer", model);
+                return new ModelAndView("buyer_find", model);
             }
         }
-        return new ModelAndView("find_buyer", model);
+        return new ModelAndView("buyer_find", model);
     }
 
 
-    @PostMapping("/edit_buyer")
+    @PostMapping("/buyer_edit")
     public String editBuyerControl(Model model,
             @RequestParam(name = "entityTitle", required = false) String entityTitle,
             @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
@@ -160,7 +165,7 @@ public class BuyerController {
             if (!password.equals(passwordCheck)) {
                 editMessage = false;
                 model.addAttribute("editMessage", editMessage);
-                return "edit_warehouse";
+                return "buyer_edit";
 
                 // In case of correct password confirmation
             } else {
@@ -185,21 +190,21 @@ public class BuyerController {
             model.addAttribute("buyer", buyer);
             model.addAttribute("editMessage", editMessage);
         }
-        return "edit_buyer";
+        return "buyer_edit";
     }
 
 
-    @GetMapping ("/delete_buyer")
+    @GetMapping ("/buyer_delete")
     public String deleteBuyerControl() {
-        return "delete_buyer";
+        return "buyer_delete";
     }
 
 
-    @PostMapping ("/delete_buyer")
+    @PostMapping ("/buyer_delete")
     public String deleteBuyerControl(
             @RequestParam(name = "login", required = false) String login,
             @RequestParam(name = "password", required = false) String password,
-            @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
+            @RequestParam(name = "fieldRegistrationNumber", required = false) String registrationNumber,
             Model model
     ) {
         Boolean deleteMessage = null; // Shows deleting status
@@ -211,12 +216,17 @@ public class BuyerController {
                 registrationNumber != null && !registrationNumber.equals("")
         ) {
             // Getting Buyer registration number, login and password and deleting from DB + sending delete notification
-            buyerDaoImpl.deleteBuyer(login, password, registrationNumber);
-            deleteMessage = true;
+            if (buyerDaoImpl.deleteBuyer(login, password, registrationNumber) > 0) {
+                deleteMessage = true;
+            } else {
+                deleteMessage = false;
+            }
+        } else {
+            deleteMessage = false;
         }
         model.addAttribute("deleteMessage", deleteMessage);
 
-        return "delete_buyer";
+        return "buyer_delete";
     }
 
 

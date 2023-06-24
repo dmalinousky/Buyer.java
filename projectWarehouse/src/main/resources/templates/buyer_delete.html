@@ -67,14 +67,18 @@
 <body>
 <div class="main_block">
   <div class="menu_item"><a th:href="@{/buyer_main_menu}" target="_blank"><h1>Main menu</h1></a></div>
-  <form method="post" th:if="${deleteMessage == null}">
+  <form method="post" th:if="${deleteMessage != true}">
     <div><h2>Sure you want to delete the account?</h2></div>
-    <div class="field"><input type="text" name="login" id="login" />&nbsp Login</div>
+    <div class="field"><input type="text" name="login" id="login" placeholder="Login" />&nbsp Login</div>
     <div class="field"><input type="text" name="password" id="password" placeholder="Password" />&nbsp Password</div>
-    <div class="field"><input type="text" name="registrationNumber" id="registrationNumber" th:value="${param.registrationNumber}" />&nbsp Registration number</div>
+    <div class="field"><input type="text" name="fieldRegistrationNumber" id="fieldRegistrationNumber" placeholder="Registration number" th:value="${param.registrationNumber}" />&nbsp Registration number</div>
     <div class="field"><button type="submit">Confirm</button></div>
   </form>
-    <div style="text-align: center" th:text="${deleteMessage == true ? 'Your data has been deleted!' : ''}"></div>
+  <div class="field"><th th:switch="${deleteMessage}">
+    <div th:case="true">Account deleted!</div>
+    <div th:case="false">Error! Check provided data!</div>
+    <div th:case="null"></div>
+  </th></div>
 </div>
 </body>
 </html>

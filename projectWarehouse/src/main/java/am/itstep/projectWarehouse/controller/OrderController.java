@@ -4,11 +4,7 @@ import am.itstep.projectWarehouse.model.Buyer;
 import am.itstep.projectWarehouse.model.Order;
 import am.itstep.projectWarehouse.model.Warehouse;
 import am.itstep.projectWarehouse.service.OrderDaoImpl;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletRequest;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,18 +12,12 @@ import lombok.Setter;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
-import java.io.IOException;
-import java.net.http.HttpClient;
 import java.util.Map;
 
 //@RestController
@@ -41,13 +31,13 @@ public class OrderController {
     private OrderDaoImpl orderDaoImpl;
 
 
-    @GetMapping("/create_order")
+    @GetMapping("/order_create")
     public String createOrderControl() {
-        return "create_order";
+        return "order_create";
     }
 
 
-    @PostMapping(value = {"/create_order"})
+    @PostMapping(value = {"/order_create"})
     public String createOrderControl(
             @RequestParam(name = "warehouseId", required = false) Long warehouseId,
             @RequestParam(name = "buyerId", required = false) Long buyerId,
@@ -66,14 +56,13 @@ public class OrderController {
 
         // Checking fields
         if (
-                warehouseId != null && !warehouseId.equals("") &&
-                buyerId != null && totalSum != null &&
+                warehouseId != null && buyerId != null && totalSum != null &&
                 keepingDays != null && collisUnloaded != null &&
-                isUnloadingByWH != null && isLoadingByWH != null &&
                 platesNumberUnloading != null && !platesNumberUnloading.equals("") &&
                 platesNumberLoading != null && !platesNumberLoading.equals("") &&
-                status != null && !status.equals("") && comment != null && !comment.equals("")
+                status != null && !status.equals("")
         ) {
+
             // Creating orders using provided info
             Order order = new Order();
             order.setOrderId(order.orderIdGenerator());
@@ -82,12 +71,8 @@ public class OrderController {
             order.setTotalSum(totalSum);
             order.setKeepingDays(keepingDays);
             order.setCollisUnloaded(Integer.parseInt(collisUnloaded));
-            order.setIsUnloadingByWH(isUnloadingByWH);
-            if (isLoadingByWH) {
-                order.setIsLoadingByWH(true);
-            } else {
-                order.setIsLoadingByWH(false);
-            }
+            order.setIsUnloadingByWH(isUnloadingByWH != null);
+            order.setIsLoadingByWH(isLoadingByWH != null);
             order.setPlatesNumberUnloading(platesNumberUnloading);
             order.setPlatesNumberLoading(platesNumberLoading);
             order.setStatus(status);
@@ -99,17 +84,17 @@ public class OrderController {
             }
         }
         model.addAttribute("createMessage", createMessage);
-        return "create_order";
+        return "order_create";
     }
 
 
-    @GetMapping(value = {"/find_order"})
+    @GetMapping(value = {"/order_find"})
     public String findOrderControl() {
-        return "find_order";
+        return "order_find";
     }
 
 
-    @PostMapping("/find_order")
+    @PostMapping("/order_find")
     public ModelAndView findOrderControl(
             @RequestParam(name = "searchOrderId", required = false) Long searchOrderId,
             ModelMap model
@@ -123,27 +108,27 @@ public class OrderController {
                 model.addAttribute("findMessage", findMessage);
                 model.addAttribute("order", orderToFind);
 
-                return new ModelAndView("forward:/edit_order", model);
+                return new ModelAndView("forward:/order_edit", model);
             } else {
                 findMessage = false;
                 model.addAttribute("findMessage", findMessage);
 
-                return new ModelAndView("find_order");
+                return new ModelAndView("order_find");
             }
         }
         model.addAttribute("findMessage", findMessage);
 
-        return new ModelAndView("find_order", model);
+        return new ModelAndView("order_find", model);
     }
 
 
-    @GetMapping(value = {"/edit_order"})
+    @GetMapping(value = {"/order_edit"})
     public String editOrderControl() {
-        return "edit_order";
+        return "order_edit";
     }
 
 
-    @PostMapping("/edit_order")
+    @PostMapping("/order_edit")
     public String editOrderControl(
            ModelMap model,
            @RequestParam(name = "orderId", required = false) Long orderId,
@@ -165,10 +150,8 @@ public class OrderController {
 
         if (order != null) {
             if (
-                    warehouseId != null && !warehouseId.equals("") &&
-                    buyerId != null && totalSum != null &&
+                    warehouseId != null && buyerId != null && totalSum != null &&
                     keepingDays != null && collisUnloaded != null &&
-                    isUnloadingByWH != null && isLoadingByWH != null &&
                     platesNumberUnloading != null && !platesNumberUnloading.equals("") &&
                     platesNumberLoading != null && !platesNumberLoading.equals("") &&
                     status != null && !status.equals("") && comment != null && !comment.equals("")
@@ -178,8 +161,8 @@ public class OrderController {
                 order.setTotalSum(totalSum);
                 order.setKeepingDays(keepingDays);
                 order.setCollisUnloaded(Integer.parseInt(collisUnloaded));
-                order.setIsUnloadingByWH(isUnloadingByWH);
-                order.setIsLoadingByWH(isLoadingByWH);
+                order.setIsUnloadingByWH(isUnloadingByWH != null);
+                order.setIsLoadingByWH(isLoadingByWH != null);
                 order.setPlatesNumberUnloading(platesNumberUnloading);
                 order.setPlatesNumberLoading(platesNumberLoading);
                 order.setStatus(status);
@@ -192,11 +175,16 @@ public class OrderController {
                 model.addAttribute("editMessage", editMessage);
             }
         }
-        return "edit_order";
+        return "order_edit";
     }
 
 
-    @GetMapping("/delete_order")
+    @GetMapping("/order_delete")
+    public String deleteOrderControl() {
+        return "order_delete";
+    }
+
+    @PostMapping("/order_delete")
     public String deleteOrderControl(
             @RequestParam(name = "deleteOrderId", required = false) Long deleteOrderId,
             Model model
@@ -216,7 +204,7 @@ public class OrderController {
         }
         model.addAttribute("deleteMessage", deleteMessage);
 
-        return "delete_order";
+        return "order_delete";
     }
 
     @GetMapping("/show_warehouse_orders")
@@ -238,22 +226,19 @@ public class OrderController {
     }
 
 
-    @GetMapping("/show_buyer_orders")
+    @GetMapping("/buyer_show_orders")
     public String showBuyerOrdersControl(
-            @RequestParam(name = "login", required = false) String login,
             @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
             @RequestParam(name = "buyerId", required = false) Long buyerId,
             Model model
     ) {
         if (
-                login != null && !login.equals("") &&
                 registrationNumber != null && !registrationNumber.equals("") &&
                 buyerId != null
         ) {
-            System.out.println("NEARBY");
             model.addAttribute("orders", orderDaoImpl.showAllOrders(buyerId, new Buyer()));
         }
-        return "show_buyer_orders";
+        return "buyer_show_orders";
     }
 
 

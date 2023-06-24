@@ -145,7 +145,7 @@ public class BuyerDaoImpl implements BuyerDaoService {
 
 
     @Override
-    public boolean deleteBuyer(String login, String password, String registrationNumber) {
+    public int deleteBuyer(String login, String password, String registrationNumber) {
         Connection connection = DBConnection.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -155,7 +155,7 @@ public class BuyerDaoImpl implements BuyerDaoService {
             ps.setString(1, login);
             ps.setString(2, password);
             ps.setString(3, registrationNumber);
-            return ps.execute();
+            return ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

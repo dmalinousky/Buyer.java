@@ -48,8 +48,6 @@
             min-width: 40vw;
             margin: 3%;
         }
-        /*.menu_item {*/
-        /*}*/
         a {
             text-decoration: none;
         }
@@ -67,8 +65,8 @@
 <body>
 <div class="main_block">
     <div class="menu_item"><a th:href="@{/buyer_main_menu}" target="_blank"><h1>Main menu</h1></a></div>
-    <form method="get" th:if="${deleteMessage == null || deleteMessage == false}">
-        <div><h2>Sure you want to delete the account?</h2></div>
+    <form method="post" th:if="${deleteMessage == null || deleteMessage == false}">
+        <div><h2>Sure you want to delete the order?</h2></div>
         <div class="field"><input type="text" name="deleteOrderId" id="deleteOrderId" />&nbsp Order id</div>
         <div class="field"><button type="submit">Confirm</button>&nbsp
             <div th:text="${deleteMessage == false ? 'No data was found!' : ''}"></div>

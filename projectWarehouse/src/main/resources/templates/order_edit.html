@@ -73,7 +73,7 @@
 <body>
 <div class="main_block">
   <div><h1>Edit order details</h1></div>
-  <form method="post" action="edit_order">
+  <form method="post" action="order_edit">
     <div class="field_container" th:if="${editMessage == null}">
         <div class="field"><input type="text" readonly name="orderId" id="orderId" th:value="${order.orderId} == null ? '' : ${order.orderId}" />&nbsp Order id</div>
         <div class="field"><input type="text" name="warehouseId" id="warehouseId" th:value="${order.warehouseId} == null ? '' : ${order.warehouseId}" />&nbsp Warehouse id</div>
