@@ -8,59 +8,57 @@
             background-color: black;
             color: white;
             font-family: monospace;
-            margin: 2% 5%;
+            padding: 0;
+            margin: 0;
         }
         h1 {
             text-align: center;
             font-size: 40px;
             font-weight: bold;
         }
-        form {
-            font-family: monospace;
-        }
-        input::placeholder {
-            font-family: monospace;
-        }
-        input {
-            min-width: 25vw;
-            height: 3.5vh;
-            font-family: monospace;
-            font-size: 150%;
-        }
-        button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 5vw;
-            height: 4vh;
-            font-family: monospace;
-            font-weight: bold;
-        }
         .main_block {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: grid;
         }
-        a {
+        .left_item {
+            width: 50vw;
+            height: 100vh;
+            display: grid;
+            grid-column-start: 1;
+            grid-column-end: 1;
+            align-items: center;
+        }
+        .right_item {
+            background-color: white;
+            color: black;
+            width: 50vw;
+            height: 100vh;
+            display: grid;
+            grid-column-start: 2;
+            grid-column-end: 2;
+            align-items: center;
+        }
+        .left_item a {
+            text-decoration: none;
+            color: white;
+        }
+        .left_item a:hover {
+            color: gray;
             text-decoration: none;
         }
-        a:link {
-            color: white;
+        .right_item a {
+            text-decoration: none;
+            color: black;
         }
-        a:visited {
-            color: white;
-        }
-        a:hover {
-            color: red;
+        .right_item a:hover {
+            color: gray;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 <div class="main_block">
-    <div class="menu_item"><a th:href="@{/buyer_main_menu}" target="_blank"><h1>Freight owner</h1></a></div>
-    <div class="menu_item"><a th:href="@{/warehouse_main_menu}" target="_blank"><h1>Warehouse</h1></a></div>
-    <div><a href="/about_project" target="_blank"><h1>About project</h1></a></div>
+    <div class="left_item"><a th:href="@{/buyer_main_menu}" target="_blank"><h1>Freight owner</h1></a></div>
+    <div class="right_item"><a th:href="@{/warehouse_main_menu}" target="_blank"><h1>Warehouse</h1></a></div>
     </div>
 </body>
 </html>

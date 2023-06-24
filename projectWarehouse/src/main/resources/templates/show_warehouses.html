@@ -27,12 +27,16 @@
             border-width: 0.5px;
             border-style: dashed;
             border-color: white;
+            text-align: center;
+            padding: 3px 3px;
         }
         td {
             border-collapse: collapse;
             border-width: 0.5px;
             border-style: dashed;
             border-color: white;
+            text-align: center;
+            padding: 3px 3px;
         }
         a {
             text-decoration: none;
@@ -67,15 +71,15 @@
 <div class="main_block" th:if="${warehouses != null}">
     <table>
         <tr>
-            <th>&nbsp Entity title &nbsp</th>
-            <th>&nbsp Address &nbsp</th>
-            <th>&nbsp GPS coordinates &nbsp</th>
-            <th>&nbsp Phone number &nbsp</th>
-            <th>&nbsp E-mail address &nbsp</th>
-            <th>&nbsp Temperature WH &nbsp</th>
-            <th>&nbsp Custom WH &nbsp</th>
-            <th>&nbsp Free space &nbsp</th>
-            <th>&nbsp Details &nbsp</th>
+            <th> Entity title </th>
+            <th> Address </th>
+            <th> GPS coordinates </th>
+            <th> Phone number </th>
+            <th> E-mail address </th>
+            <th> Temperature WH </th>
+            <th> Custom WH </th>
+            <th> Free space </th>
+            <th> Details </th>
         </tr>
         <tr th:each="warehouse : ${warehouses}">
             <td th:text="${warehouse.entityTitle}"></td>
@@ -83,8 +87,8 @@
             <td th:text="${warehouse.GpsCoordinates}"></td>
             <td th:text="${warehouse.phoneNumber}"></td>
             <td th:text="${warehouse.emailAddress}"></td>
-            <td th:text="${warehouse.isTemperatureWH == true ? 'Yes' : 'No'}"></td>
-            <td th:text="${warehouse.isCustomWH == true ? 'Yes' : 'No'}"></td>
+            <td th:text="${warehouse.isTemperatureWH != null ? 'Yes' : 'No'}"></td>
+            <td th:text="${warehouse.isCustomWH != null ? 'Yes' : 'No'}"></td>
             <td th:text="${warehouse.spaceFree}"></td>
             <td><a th:href="@{/warehouse_details(
             entityTitle=${warehouse.entityTitle},

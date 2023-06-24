@@ -13,7 +13,7 @@
         table {
             border-collapse: collapse;
             border-width: 0.5px;
-            border-style: dashed;
+            border-style: dotted;
             border-color: white;
         }
         tr {
@@ -21,18 +21,23 @@
             border-width: 0.5px;
             border-style: dashed;
             border-color: white;
+            text-align: center;
         }
         th {
             border-collapse: collapse;
             border-width: 0.5px;
             border-style: dashed;
             border-color: white;
+            text-align: center;
+            padding: 3px 3px;
         }
         td {
             border-collapse: collapse;
             border-width: 0.5px;
             border-style: dashed;
             border-color: white;
+            text-align: center;
+            padding: 3px 3px;
         }
         a {
             text-decoration: none;
@@ -67,25 +72,25 @@
 <div class="main_block" th:if="${orders != null}">
     <table>
         <tr>
-            <th>&nbsp Warehouse id &nbsp</th>
-            <th>&nbsp Total sum &nbsp</th>
-            <th>&nbsp Days keeping &nbsp</th>
-            <th>&nbsp Collis unloaded &nbsp</th>
-            <th>&nbsp Unloading by WH &nbsp</th>
-            <th>&nbsp Loading by WH &nbsp</th>
-            <th>&nbsp Plates unloading &nbsp</th>
-            <th>&nbsp Plates loading &nbsp</th>
-            <th>&nbsp Status &nbsp</th>
-            <th>&nbsp Comment &nbsp</th>
-            <th>&nbsp Edit &nbsp</th>
+            <th> Warehouse id </th>
+            <th> Total sum </th>
+            <th> Days keeping </th>
+            <th> Collis unloaded </th>
+            <th> Unloading by WH </th>
+            <th> Loading by WH </th>
+            <th> Plates unloading </th>
+            <th> Plates loading </th>
+            <th> Status </th>
+            <th> Comment </th>
+            <th> Edit </th>
         </tr>
         <tr th:each="order : ${orders}">
             <td th:text="${order.warehouseId}"></td>
             <td th:text="${order.totalSum}"></td>
             <td th:text="${order.keepingDays}"></td>
             <td th:text="${order.collisUnloaded}"></td>
-            <td th:text="${order.isUnloadingByWH}"></td>
-            <td th:text="${order.isLoadingByWH}"></td>
+            <td th:text="${order.isUnloadingByWH} != null ? 'Yes' : 'No'"></td>
+            <td th:text="${order.isLoadingByWH} != null ? 'Yes' : 'No'"></td>
             <td th:text="${order.platesNumberUnloading}"></td>
             <td th:text="${order.platesNumberLoading}"></td>
             <td th:text="${order.status}"></td>

@@ -207,26 +207,23 @@ public class OrderController {
         return "order_delete";
     }
 
-    @GetMapping("/show_warehouse_orders")
+    @GetMapping("/warehouse_orders_show")
     public String showWarehouseOrdersControl(
-            @RequestParam(name = "login", required = false) String login,
             @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
             @RequestParam(name = "warehouseId", required = false) Long warehouseId,
             Model model
     ) {
         if (
-                login != null && !login.equals("") &&
                 registrationNumber != null && !registrationNumber.equals("") &&
                 warehouseId != null
         ) {
-            System.out.println("IN IF");
             model.addAttribute("orders", orderDaoImpl.showAllOrders(warehouseId, new Warehouse()));
         }
-        return "show_warehouse_orders";
+        return "warehouse_orders_show";
     }
 
 
-    @GetMapping("/buyer_show_orders")
+    @GetMapping("/buyer_orders_show")
     public String showBuyerOrdersControl(
             @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
             @RequestParam(name = "buyerId", required = false) Long buyerId,
@@ -238,7 +235,7 @@ public class OrderController {
         ) {
             model.addAttribute("orders", orderDaoImpl.showAllOrders(buyerId, new Buyer()));
         }
-        return "buyer_show_orders";
+        return "buyer_orders_show";
     }
 
 

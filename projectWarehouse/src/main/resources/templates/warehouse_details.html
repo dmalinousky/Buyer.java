@@ -28,12 +28,16 @@
             border-width: 0.5px;
             border-style: dashed;
             border-color: white;
+            text-align: center;
+            padding: 3px 3px;
         }
         td {
             border-collapse: collapse;
             border-width: 0.5px;
             border-style: dashed;
             border-color: white;
+            text-align: center;
+            padding: 3px 3px;
         }
         a {
             text-decoration: none;
@@ -87,8 +91,8 @@
             <td th:text="${param.GpsCoordinates}"></td>
             <td th:text="${param.phoneNumber}"></td>
             <td th:text="${param.emailAddress}"></td>
-            <td th:text="${param.isTemperatureWH}"></td>
-            <td th:text="${param.isCustomWH}"></td>
+            <td th:text="${param.isTemperatureWH} != null ? 'Yes' : 'No'"></td>
+            <td th:text="${param.isCustomWH} != null ? 'Yes' : 'No'"></td>
             <td th:text="${param.spaceFree}"></td>
         </tr>
     </table>

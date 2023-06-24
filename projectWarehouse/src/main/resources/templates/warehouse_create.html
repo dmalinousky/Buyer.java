@@ -73,7 +73,7 @@
 <body>
 <div class="main_block">
     <div><h1>WH creation</h1></div>
-    <form method="get">
+    <form method="post">
         <div class="field_container">
             <div class="field"><input type="text" name="entityTitle" id="entityTitle" placeholder="Entity title" />&nbsp Entity title</div>
             <div class="field"><input type="text" name="registrationNumber" id="registrationNumber" placeholder="Registration number" />&nbsp Registration number</div>
@@ -92,7 +92,7 @@
         </div>
     </form>
     <div class="field"><th th:switch="${createMessage}">
-        <div th:case="true">Order created!</div>
+        <div th:case="true">Warehouse created!</div>
         <div th:case="false">Error! Check provided data!</div>
         <div th:case="null"></div>
     </th></div>

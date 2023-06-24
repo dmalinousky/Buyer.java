@@ -80,11 +80,12 @@
             <div class="field"><input type="text" name="realAddress" id="realAddress" th:value="${buyer.realAddress} == null ? '' : ${buyer.realAddress}" />&nbsp Real &nbsp address </div>
             <div class="field"><input type="text" name="phoneNumber" id="phoneNumber" th:value="${buyer.phoneNumber} == null ? '' : ${buyer.phoneNumber}" />&nbsp Phone &nbsp number </div>
             <div class="field"><input type="text" name="emailAddress" id="emailAddress" th:value="${buyer.emailAddress} == null ? '' : ${buyer.emailAddress}" />&nbsp E-mail address </div>
-            <div><input style="display: none" type="text" name="buyerId" id="buyerId" th:value="${buyer.buyerId}"  /></div>
+            <div class="field"><input type="text" name="buyerId" id="buyerId" th:value="${buyer.buyerId}" readonly />&nbsp Buyer Id </div>
             <div class="field"><button type="submit">Confirm</button></div>
             <div th:if="${editMessage == true}" class="field">Data has been changed!</div>
+            <div class="field"><a th:href="@{/order_create(buyerId=${buyer.buyerId})}" target="_blank">Create order</a></div>
+            <div class="field"><a th:href="@{/buyer_orders_show(registrationNumber=${buyer.registrationNumber}, buyerId=${buyer.buyerId} )}" target="_blank">My orders</a></div>
             <div class="field"><a th:href="@{/buyer_delete(registrationNumber=${buyer.registrationNumber})}" target="_blank">Delete my account</a></div>
-            <div class="field"><a th:href="@{/buyer_show_orders(registrationNumber=${buyer.registrationNumber}, buyerId=${buyer.buyerId} )}" target="_blank">My orders</a></div>
         </div>
     </form>
 </div>

@@ -75,8 +75,8 @@
   <div><h1>Order creation</h1></div>
   <form method="post">
     <div class="field_container">
-      <div class="field"><input type="text" name="warehouseId" id="warehouseId" placeholder="Warehouse id" />&nbsp Warehouse id</div>
-      <div class="field"><input type="text" name="buyerId" id="buyerId" placeholder="Buyer id" />&nbsp Buyer id</div>
+      <div class="field"><input type="text" name="warehouseId" id="warehouseId" placeholder="Warehouse id" th:value="${param.warehouseId}" />&nbsp Warehouse id</div>
+      <div class="field"><input type="text" name="buyerId" id="buyerId" placeholder="Buyer id" th:value="${param.buyerId[0]}" />&nbsp Buyer id</div>
       <div class="field"><input type="text" name="totalSum" id="totalSum" placeholder="Total sum" />&nbsp Total sum</div>
       <div class="field"><input type="text" name="keepingDays" id="keepingDays" placeholder="Keeping days" />&nbsp Keeping days</div>
       <div class="field"><input type="text" name="collisUnloaded" id="collisUnloaded" placeholder="Collis unloaded" />&nbsp Collis unloaded</div>

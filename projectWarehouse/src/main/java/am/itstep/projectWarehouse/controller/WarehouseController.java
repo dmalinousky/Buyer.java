@@ -9,10 +9,12 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @NoArgsConstructor
@@ -23,21 +25,28 @@ public class WarehouseController {
     @Autowired
     private WarehouseDaoImpl warehouseDaoImpl;
 
-    @GetMapping(value = {"/create_warehouse", "/create_warehouse/{entityTitle}/{registrationNumber}/{legalAddress}/{realAddress}/{GpsCoordinates}/{phoneNumber}/{emailAddress}/{spaceFree}/{login}/{password}/{passwordCheck}/{isTemperatureWH}/{isCustomWH}"})
+
+    @GetMapping(value = {"/warehouse_create"})
+    public String createWarehouseControl() {
+        return "warehouse_create";
+    }
+
+
+    @PostMapping(value = {"/warehouse_create"})
     public String createWarehouseControl(
-            @PathVariable(name = "entityTitle", required = false) String entityTitle,
-            @PathVariable(name = "registrationNumber", required = false) String registrationNumber,
-            @PathVariable(name = "legalAddress", required = false) String legalAddress,
-            @PathVariable(name = "realAddress", required = false) String realAddress,
-            @PathVariable(name = "GpsCoordinates", required = false) String GpsCoordinates,
-            @PathVariable(name = "phoneNumber", required = false) String phoneNumber,
-            @PathVariable(name = "emailAddress", required = false) String emailAddress,
-            @PathVariable(name = "isTemperatureWH", required = false) Boolean isTemperatureWH,
-            @PathVariable(name = "isCustomWH", required = false) Boolean isCustomWH,
-            @PathVariable(name = "spaceFree", required = false) Double spaceFree,
-            @PathVariable(name = "login", required = false) String login,
-            @PathVariable(name = "password", required = false) String password,
-            @PathVariable(name = "passwordCheck", required = false) String passwordCheck,
+            @RequestParam(name = "entityTitle", required = false) String entityTitle,
+            @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
+            @RequestParam(name = "legalAddress", required = false) String legalAddress,
+            @RequestParam(name = "realAddress", required = false) String realAddress,
+            @RequestParam(name = "GpsCoordinates", required = false) String GpsCoordinates,
+            @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
+            @RequestParam(name = "emailAddress", required = false) String emailAddress,
+            @RequestParam(name = "isTemperatureWH", required = false) Boolean isTemperatureWH,
+            @RequestParam(name = "isCustomWH", required = false) Boolean isCustomWH,
+            @RequestParam(name = "spaceFree", required = false) Double spaceFree,
+            @RequestParam(name = "login", required = false) String login,
+            @RequestParam(name = "password", required = false) String password,
+            @RequestParam(name = "passwordCheck", required = false) String passwordCheck,
             Model model
     ) {
         Boolean createMessage = null; // Message shows user if account has been created
@@ -49,7 +58,6 @@ public class WarehouseController {
                 GpsCoordinates != null && !GpsCoordinates.equals("") &&
                 phoneNumber != null && !phoneNumber.equals("") &&
                 emailAddress != null && !emailAddress.equals("") &&
-                isTemperatureWH != null && isCustomWH != null &&
                 spaceFree != null &&
                 login != null && !login.equals("") &&
                 password != null && !password.equals("") &&
@@ -59,7 +67,7 @@ public class WarehouseController {
             if (!password.equals(passwordCheck)) {
                 createMessage = false;
                 model.addAttribute("createMessage", createMessage);
-                return "create_warehouse";
+                return "warehouse_create";
 
                 // In case of correct password confirmation
             } else {
@@ -90,35 +98,48 @@ public class WarehouseController {
         }
         model.addAttribute("createMessage", createMessage);
 
-        return "create_warehouse";
+        return "warehouse_create";
     }
 
 
-    @GetMapping(value = {"/find_and_edit_warehouse"})
-    public String findWarehouseControl(
-            @RequestParam(name = "providedRegistrationNumber", required = false) String registrationNumber,
-            Model model
+    @GetMapping(value = {"/warehouse_find"})
+    public String findWarehouseControl() {
+        return "warehouse_find";
+    }
+
+
+    @PostMapping(value = {"/warehouse_find"})
+    public ModelAndView findWarehouseControl(
+            @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
+            ModelMap model
     ) {
-        System.out.println(registrationNumber);
-        Boolean editMessage = null;
-        Warehouse warehouse = null;
-        if (registrationNumber != null) {
-            Warehouse optionalWarehouse = this.getWarehouseDaoImpl().findWarehouse(registrationNumber);
-            if (optionalWarehouse != null) {
-                warehouse = optionalWarehouse;
-                this.getWarehouseDaoImpl().editWarehouse(warehouse.getWarehouseId(), warehouse);
-                editMessage = true;
+        Boolean findMessage = null;
+        if (registrationNumber != null && !registrationNumber.equals("")) {
+            Warehouse warehouse = this.getWarehouseDaoImpl().findWarehouse(registrationNumber);
+            if (warehouse != null) {
+                findMessage = true;
+                model.addAttribute("findMessage", findMessage);
+                model.addAttribute("warehouse", warehouse);
+                return new ModelAndView("forward:/warehouse_edit", model);
             } else {
-                editMessage = false;
+                findMessage = false;
+                model.addAttribute("findMessage", findMessage);
+                model.addAttribute("warehouse", warehouse);
+                return new ModelAndView("warehouse_find");
             }
         }
-        model.addAttribute("editMessage", editMessage);
-        model.addAttribute("warehouse", warehouse);
-        return "find_and_edit_warehouse";
+        return new ModelAndView("warehouse_find");
     }
 
-    @PostMapping("/find_and_edit_warehouse")
-    public String editWarehouseControl(Warehouse warehouse, Boolean editMessage, Model model,
+
+    @GetMapping("/warehouse_edit")
+    public String editWarehouseControl() {
+        return "warehouse_edit";
+    }
+
+
+    @PostMapping("/warehouse_edit")
+    public String editWarehouseControl(Model model,
            @RequestParam(name = "entityTitle", required = false) String entityTitle,
            @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
            @RequestParam(name = "legalAddress", required = false) String legalAddress,
@@ -135,7 +156,11 @@ public class WarehouseController {
            @RequestParam(name = "password", required = false) String password,
            @RequestParam(name = "warehouseId", required = false) Long warehouseId)
     {
-        if (warehouse != null && warehouse.getWarehouseId().equals(warehouseId)) {
+        Boolean editMessage = null;
+
+        Warehouse warehouse = warehouseDaoImpl.findWarehouse(warehouseId);
+
+        if (warehouse != null) {
             if (
                     entityTitle != null && !entityTitle.equals("") &&
                     registrationNumber != null && !registrationNumber.equals("") &&
@@ -144,7 +169,6 @@ public class WarehouseController {
                     GpsCoordinates != null && !GpsCoordinates.equals("") &&
                     phoneNumber != null && !phoneNumber.equals("") &&
                     emailAddress != null && !emailAddress.equals("") &&
-                    isTemperatureWH != null && isCustomWH != null &&
                     spaceFree != null && balance != null &&
                     status != null && !status.equals("") &&
                     login != null && !login.equals("") &&
@@ -166,11 +190,11 @@ public class WarehouseController {
                 model.addAttribute("editMessage", editMessage);
             }
         }
-        return "find_and_edit_warehouse";
+        return "warehouse_edit";
     }
 
 
-    @GetMapping("/delete_warehouse")
+    @GetMapping("/warehouse_delete")
     public String deleteWarehouseControl(
             @RequestParam(name = "login", required = false) String login,
             @RequestParam(name = "password", required = false) String password,
@@ -196,7 +220,7 @@ public class WarehouseController {
         }
         model.addAttribute("deleteMessage", deleteMessage);
 
-        return "delete_warehouse";
+        return "warehouse_delete";
     }
 
 
