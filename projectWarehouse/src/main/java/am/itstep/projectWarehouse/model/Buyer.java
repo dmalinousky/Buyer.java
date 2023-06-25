@@ -13,19 +13,25 @@ import java.io.*;
 @ToString
 @Component
 public class Buyer implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true)
+    private Long buyerId;
     private String entityTitle;
     @Column(unique = true)
     private String registrationNumber;
     private String legalAddress;
     private String realAddress;
     private String phoneNumber;
+    @Column(unique = true)
     private String emailAddress;
     private Double balance;
     private String status;
     @Column(unique = true)
     private String login;
     private String password;
-    private Long buyerId;
+    private Role role;
 
     public Long buyerIdGenerator() {
         Long id = null;
@@ -51,6 +57,4 @@ public class Buyer implements Serializable {
         }
         return id;
     }
-
-
 }

@@ -1,6 +1,7 @@
 package am.itstep.projectWarehouse.controller;
 
 import am.itstep.projectWarehouse.model.Buyer;
+import am.itstep.projectWarehouse.model.Role;
 import am.itstep.projectWarehouse.service.BuyerDaoImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -78,6 +79,7 @@ public class BuyerController {
                 buyer.setPassword(password);
                 buyer.setBalance(0d); // Balance is default for now
                 buyer.setStatus("None"); // Status is default for now
+                buyer.setRole(Role.BUYER);
 
                 // Putting new buyer into DB. If everything is ok showing such message
                 if (this.getBuyerDaoImpl().createBuyer(buyer)) {
@@ -135,6 +137,7 @@ public class BuyerController {
 
     @PostMapping("/buyer_edit")
     public String editBuyerControl(Model model,
+            @RequestParam(name = "buyerId", required = false) Long buyerId,
             @RequestParam(name = "entityTitle", required = false) String entityTitle,
             @RequestParam(name = "registrationNumber", required = false) String registrationNumber,
             @RequestParam(name = "legalAddress", required = false) String legalAddress,
@@ -143,8 +146,7 @@ public class BuyerController {
             @RequestParam(name = "emailAddress", required = false) String emailAddress,
             @RequestParam(name = "login", required = false) String login,
             @RequestParam(name = "password", required = false) String password,
-            @RequestParam(name = "passwordCheck", required = false) String passwordCheck,
-            @RequestParam(name = "buyerId", required = false) Long buyerId
+            @RequestParam(name = "passwordCheck", required = false) String passwordCheck
     ) {
         Buyer buyer = null;
 
@@ -171,6 +173,7 @@ public class BuyerController {
             } else {
                 // Editing Buyer object and putting provided data into it
                 buyer = new Buyer();
+                buyer.setBuyerId(buyerId);
                 buyer.setEntityTitle(entityTitle);
                 buyer.setRegistrationNumber(registrationNumber);
                 buyer.setLegalAddress(legalAddress);
@@ -179,8 +182,9 @@ public class BuyerController {
                 buyer.setEmailAddress(emailAddress);
                 buyer.setLogin(login);
                 buyer.setPassword(password);
-                buyer.setBuyerId(buyerId);
-                System.out.println(this.getBuyerDaoImpl().editBuyer(buyer));
+                buyer.setRole(Role.BUYER);
+                this.getBuyerDaoImpl().editBuyer(buyer);
+
                 if (this.getBuyerDaoImpl().editBuyer(buyer)) {
                     editMessage = true;
                 } else {

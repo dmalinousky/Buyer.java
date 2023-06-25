@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>Registration</title>
+  <title>Order creation</title>
   <style>
     body {
       background-color: black;
@@ -75,15 +75,15 @@
   <div><h1>Order creation</h1></div>
   <form method="post">
     <div class="field_container">
-      <div class="field"><input type="text" name="warehouseId" id="warehouseId" placeholder="Warehouse id" th:value="${param.warehouseId}" />&nbsp Warehouse id</div>
-      <div class="field"><input type="text" name="buyerId" id="buyerId" placeholder="Buyer id" th:value="${param.buyerId[0]}" />&nbsp Buyer id</div>
-      <div class="field"><input type="text" name="totalSum" id="totalSum" placeholder="Total sum" />&nbsp Total sum</div>
-      <div class="field"><input type="text" name="keepingDays" id="keepingDays" placeholder="Keeping days" />&nbsp Keeping days</div>
-      <div class="field"><input type="text" name="collisUnloaded" id="collisUnloaded" placeholder="Collis unloaded" />&nbsp Collis unloaded</div>
-      <div class="field"><input type="text" name="platesNumberUnloading" id="platesNumberUnloading" placeholder="Plates numbers unloading" />&nbsp Plates unloading</div>
-      <div class="field"><input type="text" name="platesNumberLoading" id="platesNumberLoading" placeholder="Plates numbers loading" />&nbsp Plates loading</div>
-      <div class="field"><input type="text" name="status" id="status" placeholder="Status" />&nbsp Status</div>
-      <div class="field"><input type="text" name="comment" id="comment" placeholder="Comment" />&nbsp Comment</div>
+      <div class="field"><input type="text" name="warehouseId" id="warehouseId" placeholder="Warehouse id" th:value="${param.warehouseId}" required />&nbsp Warehouse id</div>
+      <div class="field"><input type="text" name="buyerId" id="buyerId" placeholder="Buyer id" th:value="${param.buyerId[0]}" required />&nbsp Buyer id</div>
+      <div class="field"><input type="text" name="totalSum" id="totalSum" placeholder="Total sum" required />&nbsp Total sum</div>
+      <div class="field"><input type="text" name="keepingDays" id="keepingDays" placeholder="Keeping days" required />&nbsp Keeping days</div>
+      <div class="field"><input type="text" name="collisUnloaded" id="collisUnloaded" placeholder="Collis unloaded" required />&nbsp Collis unloaded</div>
+      <div class="field"><input type="text" name="platesNumberUnloading" id="platesNumberUnloading" placeholder="Plates numbers unloading" required />&nbsp Plates unloading</div>
+      <div class="field"><input type="text" name="platesNumberLoading" id="platesNumberLoading" placeholder="Plates numbers loading" required />&nbsp Plates loading</div>
+      <div class="field"><input type="text" name="status" id="status" placeholder="Status" required />&nbsp Status</div>
+      <div class="field"><input type="text" name="comment" id="comment" placeholder="Comment" required />&nbsp Comment</div>
       <div class="field"><input class="checkbox" type="checkbox" name="isUnloadingByWH" id="isUnloadingByWH" />&nbsp Unloading by WH</div>
       <div class="field"><input class="checkbox" type="checkbox" name="isLoadingByWH" id="isLoadingByWH" />&nbsp Loading by WH</div>
       <div class="field"><button type="submit" >Confirm</button></div>

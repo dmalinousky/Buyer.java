@@ -24,6 +24,7 @@ public class Warehouse implements Serializable {
     private String realAddress;
     private String GpsCoordinates;
     private String phoneNumber;
+    @Column(unique = true)
     private String emailAddress;
     private Boolean isTemperatureWH;
     private Boolean isCustomWH;
@@ -33,6 +34,7 @@ public class Warehouse implements Serializable {
     @Column(unique = true)
     private String login;
     private String password;
+    private Role role;
 
 
     public Long warehouseIdGenerator() {

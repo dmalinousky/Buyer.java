@@ -79,22 +79,22 @@
 </head>
 <body>
 <div class="main_block">
-    <div><h1>Edit WH details</h1></div>
+    <div><h1>Account details</h1></div>
     <form method="post">
         <div class="field_container" th:if="${warehouse != null}">
-            <div class="field"><input type="text" name="entityTitle" id="entityTitle" th:value="${warehouse.entityTitle} == null ? '' : ${warehouse.entityTitle}" />&nbsp Entity title</div>
-            <div class="field"><input type="text" name="registrationNumber" id="registrationNumber" th:value="${warehouse.registrationNumber} == null ? '' : ${warehouse.registrationNumber}" />&nbsp Registration number</div>
-            <div class="field"><input type="text" name="legalAddress" id="legalAddress" th:value="${warehouse.legalAddress} == null ? '' : ${warehouse.legalAddress}" />&nbsp legal address </div>
-            <div class="field"><input type="text" name="realAddress" id="realAddress" th:value="${warehouse.realAddress} == null ? '' : ${warehouse.realAddress}" />&nbsp Real address</div>
-            <div class="field"><input type="text" name="GpsCoordinates" id="GpsCoordinates" th:value="${warehouse.GpsCoordinates} == null ? '' : ${warehouse.GpsCoordinates}" />&nbsp GPS coordinates</div>
-            <div class="field"><input type="text" name="phoneNumber" id="phoneNumber" th:value="${warehouse.phoneNumber} == null ? '' : ${warehouse.phoneNumber}" />&nbsp Phone number</div>
-            <div class="field"><input type="text" name="emailAddress" id="emailAddress" th:value="${warehouse.emailAddress} == null ? '' : ${warehouse.emailAddress}" />&nbsp E-mail address</div>
-            <div class="field"><input type="text" name="spaceFree" id="spaceFree" th:value="${warehouse.spaceFree} == null ? '' : ${warehouse.spaceFree}" />&nbsp Space free</div>
-            <div class="field"><input type="text" name="balance" id="balance" th:value="${warehouse.balance} == null ? '' : ${warehouse.balance}" />&nbsp Balance</div>
-            <div class="field"><input type="text" name="status" id="status" th:value="${warehouse.status} == null ? '' : ${warehouse.status}" />&nbsp Status</div>
-            <div class="field"><input type="text" name="login" id="login" th:value="${warehouse.login} == null ? '' : ${warehouse.login}" />&nbsp Login</div>
-            <div class="field"><input type="text" name="password" id="password" th:value="${warehouse.password} == null ? '' : ${warehouse.password}" />&nbsp Password</div>
-            <div class="field"><input type="text" name="warehouseId" id="warehouseId" readonly th:value="${warehouse.warehouseId} == null ? '' : ${warehouse.warehouseId}" />&nbsp Warehouse id</div>
+            <div class="field"><input type="text" name="entityTitle" id="entityTitle" th:value="${warehouse.entityTitle} == null ? '' : ${warehouse.entityTitle}" required />&nbsp Entity title</div>
+            <div class="field"><input type="text" name="registrationNumber" id="registrationNumber" th:value="${warehouse.registrationNumber} == null ? '' : ${warehouse.registrationNumber}" required />&nbsp Registration number</div>
+            <div class="field"><input type="text" name="legalAddress" id="legalAddress" th:value="${warehouse.legalAddress} == null ? '' : ${warehouse.legalAddress}" required />&nbsp legal address </div>
+            <div class="field"><input type="text" name="realAddress" id="realAddress" th:value="${warehouse.realAddress} == null ? '' : ${warehouse.realAddress}" required />&nbsp Real address</div>
+            <div class="field"><input type="text" name="GpsCoordinates" id="GpsCoordinates" th:value="${warehouse.GpsCoordinates} == null ? '' : ${warehouse.GpsCoordinates}" required />&nbsp GPS coordinates</div>
+            <div class="field"><input type="text" name="phoneNumber" id="phoneNumber" th:value="${warehouse.phoneNumber} == null ? '' : ${warehouse.phoneNumber}" required />&nbsp Phone number</div>
+            <div class="field"><input type="text" name="emailAddress" id="emailAddress" th:value="${warehouse.emailAddress} == null ? '' : ${warehouse.emailAddress}" required />&nbsp E-mail address</div>
+            <div class="field"><input type="text" name="spaceFree" id="spaceFree" th:value="${warehouse.spaceFree} == null ? '' : ${warehouse.spaceFree}" required />&nbsp Space free</div>
+            <div class="field"><input type="text" name="balance" id="balance" th:value="${warehouse.balance} == null ? '' : ${warehouse.balance}" required />&nbsp Balance</div>
+            <div class="field"><input type="text" name="status" id="status" th:value="${warehouse.status} == null ? '' : ${warehouse.status}" required />&nbsp Status</div>
+            <div class="field"><input type="text" name="login" id="login" th:value="${warehouse.login} == null ? '' : ${warehouse.login}" required />&nbsp Login</div>
+            <div class="field"><input type="text" name="password" id="password" th:value="${warehouse.password} == null ? '' : ${warehouse.password}" required />&nbsp Password</div>
+            <div class="field"><input type="text" name="warehouseId" id="warehouseId" readonly th:value="${warehouse.warehouseId} == null ? '' : ${warehouse.warehouseId}" required />&nbsp Warehouse id</div>
             <div class="field"><input class="checkbox" type="checkbox" name="isTemperatureWH" id="isTemperatureWH" th:checked="${warehouse.isTemperatureWH}" />&nbsp Temperature WH</div>
             <div class="field"><input class="checkbox" type="checkbox" name="isCustomWH" id="isCustomWH" th:checked="${warehouse.isCustomWH}" />&nbsp Custom WH</div>
             <div class="field"><button type="submit">Confirm</button></div>

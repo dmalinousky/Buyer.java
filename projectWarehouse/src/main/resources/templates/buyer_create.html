@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <title>Buyer registration</title>
     <style>
         body {
             background-color: black;
@@ -56,18 +56,18 @@
 </head>
 <body>
 <div class="main_block">
-    <div><h1>Registration</h1></div>
+    <div><h1>Buyer registration</h1></div>
     <form method="post">
         <div class="field_container">
-            <div class="field"><input type="text" name="login" id="login" placeholder="Login" /></div>
-            <div class="field"><input type="text" name="password" id="password" placeholder="Password" /></div>
-            <div class="field"><input type="text" name="passwordCheck" id="passwordCheck" placeholder="Repeat password" /></div>
-            <div class="field"><input type="text" name="entityTitle" id="entityTitle" placeholder="Entity title" /></div>
-            <div class="field"><input type="text" name="registrationNumber" id="registrationNumber" placeholder="Registration number" /></div>
-            <div class="field"><input type="text" name="legalAddress" id="legalAddress" placeholder="Legal address" /></div>
-            <div class="field"><input type="text" name="realAddress" id="realAddress" placeholder="Real address" /></div>
-            <div class="field"><input type="text" name="phoneNumber" id="phoneNumber" placeholder="Phone number" /></div>
-            <div class="field"><input type="text" name="emailAddress" id="emailAddress" placeholder="E-mail address" /></div>
+            <div class="field"><input type="text" name="login" id="login" placeholder="Login" required /></div>
+            <div class="field"><input type="text" name="password" id="password" placeholder="Password" required /></div>
+            <div class="field"><input type="text" name="passwordCheck" id="passwordCheck" placeholder="Repeat password" required /></div>
+            <div class="field"><input type="text" name="entityTitle" id="entityTitle" placeholder="Entity title" required /></div>
+            <div class="field"><input type="text" name="registrationNumber" id="registrationNumber" placeholder="Registration number" required /></div>
+            <div class="field"><input type="text" name="legalAddress" id="legalAddress" placeholder="Legal address" required /></div>
+            <div class="field"><input type="text" name="realAddress" id="realAddress" placeholder="Real address" required /></div>
+            <div class="field"><input type="text" name="phoneNumber" id="phoneNumber" placeholder="Phone number" required /></div>
+            <div class="field"><input type="text" name="emailAddress" id="emailAddress" placeholder="E-mail address" required /></div>
             <div class="field"><button type="submit">Register</button></div>
         </div>
         <div class="field"><th th:switch="${createMessage}">

@@ -1,5 +1,6 @@
 package am.itstep.projectWarehouse.controller;
 
+import am.itstep.projectWarehouse.model.Role;
 import am.itstep.projectWarehouse.model.Warehouse;
 import am.itstep.projectWarehouse.service.WarehouseDaoImpl;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -73,6 +73,7 @@ public class WarehouseController {
             } else {
                 // Creating Warehouse object and putting provided data into it
                 Warehouse warehouse = new Warehouse();
+                warehouse.setWarehouseId(warehouse.warehouseIdGenerator());
                 warehouse.setEntityTitle(entityTitle);
                 warehouse.setRegistrationNumber(registrationNumber);
                 warehouse.setLegalAddress(legalAddress);
@@ -87,7 +88,7 @@ public class WarehouseController {
                 warehouse.setStatus("None"); // Status is default for now
                 warehouse.setLogin(login);
                 warehouse.setPassword(password);
-                warehouse.setWarehouseId(warehouse.warehouseIdGenerator());
+                warehouse.setRole(Role.WAREHOUSE);
                 // Putting new Warehouse into database. If everything is ok showing such message
                 if (this.getWarehouseDaoImpl().createWarehouse(warehouse)) {
                     createMessage = true;
@@ -185,8 +186,8 @@ public class WarehouseController {
                 warehouse.setIsCustomWH(isCustomWH);
                 warehouse.setLogin(login);
                 warehouse.setPassword(password);
+                warehouse.setRole(Role.WAREHOUSE);
                 this.getWarehouseDaoImpl().editWarehouse(warehouseId, warehouse);
-
                 model.addAttribute("editMessage", editMessage);
             }
         }

@@ -66,7 +66,8 @@ public class WarehouseDaoImpl implements WarehouseDaoService {
                     "balance = :balance, " +
                     "status = :status, " +
                     "login = :login, " +
-                    "password = :password " +
+                    "password = :password, " +
+                    "role = :role " +
                     "WHERE warehouseId = :warehouseId");
             query.setParameter("entityTitle", warehouse.getEntityTitle());
             query.setParameter("registrationNumber", warehouse.getRegistrationNumber());
@@ -82,6 +83,7 @@ public class WarehouseDaoImpl implements WarehouseDaoService {
             query.setParameter("status", warehouse.getStatus());
             query.setParameter("login", warehouse.getLogin());
             query.setParameter("password", warehouse.getPassword());
+            query.setParameter("role", warehouse.getRole());
             query.setParameter("warehouseId", warehouse.getWarehouseId());
             query.executeUpdate();
             transaction.commit();
